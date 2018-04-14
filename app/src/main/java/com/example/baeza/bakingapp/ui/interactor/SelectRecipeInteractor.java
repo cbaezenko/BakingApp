@@ -14,29 +14,28 @@ import timber.log.Timber;
 
 public class SelectRecipeInteractor implements SelectRecipeManager.Interactor {
 
-    SelectRecipeManager.Presenter presenter;
+    private SelectRecipeManager.Presenter presenter;
 
-    public SelectRecipeInteractor(SelectRecipePresenter presenter){
+    public SelectRecipeInteractor(SelectRecipePresenter presenter) {
         this.presenter = presenter;
     }
 
-    private void getRetrofitAnswer(){
+    private void getRetrofitAnswer() {
         utilities.getIngredientService().getRecipe()
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber <List<Recipe>>() {
+                .subscribe(new Subscriber<List<Recipe>>() {
                     @Override
                     public void onCompleted() {
-                    Timber.d("mostrar completo");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                    Timber.d("mostrar error"+e.getCause()+e.getMessage().toString());
+                        Timber.d(e);
                     }
 
                     @Override
                     public void onNext(List<Recipe> recipe) {
-                    Timber.d("mostrar recipe name "+recipe.get(0).getIngredients().get(1).getIngredient().toString());
+                        presenter.getRecipesView(recipe);
                     }
                 });
 
@@ -44,7 +43,6 @@ public class SelectRecipeInteractor implements SelectRecipeManager.Interactor {
 
     @Override
     public void getRecipesInteractor() {
-        Timber.d("mostrar inicio de metodo");
         getRetrofitAnswer();
     }
 }

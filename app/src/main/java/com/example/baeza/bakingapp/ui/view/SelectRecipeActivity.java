@@ -12,7 +12,7 @@ import com.example.baeza.bakingapp.ui.manager.SelectRecipeManager;
 import com.example.baeza.bakingapp.ui.presenter.SelectRecipePresenter;
 import com.example.baeza.bakingapp.ui.utility.SelectRecipeAdapter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +25,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
     SelectRecipeAdapter mAdapter;
     SelectRecipePresenter mPresenter;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +35,29 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
         ButterKnife.bind(this);
         Timber.plant(new Timber.DebugTree());
 
-        RecyclerView.LayoutManager layoutManager;
         if (findViewById(R.id.sw600dp) != null) {
             layoutManager = new GridLayoutManager(this, 3);
         } else {
             layoutManager = new LinearLayoutManager(this);
         }
-
-        mPresenter = new SelectRecipePresenter(this);
-        mPresenter.getRecipesInteractor();
-
-        mAdapter = new SelectRecipeAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setHasFixedSize(true);
     }
 
     @Override
-    public void getRecipesView(ArrayList<Recipe> recipeArrayList) {
+    public void onResume() {
+        super.onResume();
+        mPresenter = new SelectRecipePresenter(this);
+        mPresenter.getRecipesInteractor();
+    }
 
+    @Override
+    public void getRecipesView(List<Recipe> recipeList) {
+        populateRecyclerView(recipeList);
+    }
+
+    private void populateRecyclerView(List<Recipe> recipeList) {
+        mAdapter = new SelectRecipeAdapter(this, recipeList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
     }
 }

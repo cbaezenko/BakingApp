@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="mp_keylines">16dp</dimen>
+    <dimen name="card_image_height">200dp</dimen>
+    <dimen name="card_title_height">40dp</dimen>
+    <dimen name="card_height">256dp</dimen>
+</resources>
