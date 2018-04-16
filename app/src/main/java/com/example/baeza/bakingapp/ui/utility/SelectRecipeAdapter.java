@@ -1,6 +1,7 @@
 package com.example.baeza.bakingapp.ui.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
+import com.example.baeza.bakingapp.ui.view.MainContentActivity;
 
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         return recipeList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         CardView cardView;
         ImageView cardImage;
@@ -60,7 +63,18 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
             cardView = itemView.findViewById(R.id.card_view);
             cardImage = itemView.findViewById(R.id.card_image);
             cardTitle = itemView.findViewById(R.id.card_title);
-            buttonShow = itemView.findViewById(R.id.button_show);
+            buttonShow = itemView.findViewById(R.id.button_ingredient);
+            buttonShow.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            int clickedPosition = getAdapterPosition();
+
+            Toast.makeText(context, "clicked "+recipeList.get(clickedPosition).getName(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, MainContentActivity.class);
+            context.startActivity(intent);
         }
     }
 }
