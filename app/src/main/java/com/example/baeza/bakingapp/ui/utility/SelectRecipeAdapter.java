@@ -2,6 +2,7 @@ package com.example.baeza.bakingapp.ui.utility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -18,6 +19,7 @@ import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.view.MainContentActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapter.ViewHolder> {
@@ -73,9 +75,12 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
             int clickedPosition = getAdapterPosition();
 
-            Toast.makeText(context, "clicked "+recipeList.get(clickedPosition).getName(), Toast.LENGTH_SHORT).show();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants.RECIPE_KEY, recipeList.get(clickedPosition));
+            bundle.putParcelableArrayList("steps", (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getSteps());
+
             Intent intent = new Intent(context, MainContentActivity.class);
-            intent.putExtra(Constants.RECIPE_KEY, recipeList.get(clickedPosition));
+            intent.putExtra("bundle", bundle);
             context.startActivity(intent);
         }
     }

@@ -9,15 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.baeza.bakingapp.R;
-import com.example.baeza.bakingapp.ui.data.Recipe;
+import com.example.baeza.bakingapp.ui.data.Step;
+
+import java.util.List;
 
 public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerViewAdapter.ViewHolder> {
 
-    private Recipe mRecipe;
+    private List <Step> stepList;
     private  Context context;
-    public StepRecyclerViewAdapter(Context context, Recipe recipe){
+    public StepRecyclerViewAdapter(Context context, List<Step> stepList){
         this.context = context;
-        mRecipe = recipe;
+        this.stepList = stepList;
     }
 
     @NonNull
@@ -32,16 +34,15 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-         holder.texStep.setText(context.getString(R.string.step)+position);
+         holder.texStep.setText(context.getString(R.string.step) +" "+ position+ " "+stepList.get(position).getShortDescription());
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        return stepList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
         TextView texStep;
 
         public ViewHolder(View itemView) {
