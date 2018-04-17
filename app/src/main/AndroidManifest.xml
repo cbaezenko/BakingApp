@@ -18,7 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.view.MainContentActivity"/>
+        <activity
+            android:name=".ui.view.MainContentActivity"
+            android:parentActivityName=".ui.view.SelectRecipeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

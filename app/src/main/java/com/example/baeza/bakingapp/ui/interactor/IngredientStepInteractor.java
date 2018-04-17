@@ -6,8 +6,9 @@ import com.example.baeza.bakingapp.ui.manager.IngredientStepManager;
 public class IngredientStepInteractor implements IngredientStepManager.Interactor {
 
     IngredientStepManager.Presenter mPresenter;
-    public IngredientStepInteractor(IngredientStepManager.Presenter presenter){
-    mPresenter = presenter;
+
+    public IngredientStepInteractor(IngredientStepManager.Presenter presenter) {
+        mPresenter = presenter;
     }
 
     @Override

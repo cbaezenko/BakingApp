@@ -3,6 +3,6 @@
     <string name="image_recipe_card">Image recipe card</string>
     <string name="show">Show</string>
 
-    <string name="Ingredients">Ingredients</string>
-    <string name="Step">Step </string>
+    <string name="ingredients">Ingredients</string>
+    <string name="step">Step </string>
 </resources>

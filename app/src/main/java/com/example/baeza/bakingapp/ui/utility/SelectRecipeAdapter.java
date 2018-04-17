@@ -2,6 +2,7 @@ package com.example.baeza.bakingapp.ui.utility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +75,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
             Toast.makeText(context, "clicked "+recipeList.get(clickedPosition).getName(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(context, MainContentActivity.class);
+            intent.putExtra(Constants.RECIPE_KEY, recipeList.get(clickedPosition));
             context.startActivity(intent);
         }
     }

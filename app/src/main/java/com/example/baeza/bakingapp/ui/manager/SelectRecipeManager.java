@@ -7,14 +7,17 @@ import java.util.List;
 
 public interface SelectRecipeManager {
 
-    public interface View{
+    public interface View {
         void getRecipesView(List<Recipe> recipeList);
     }
+
     public interface Interactor {
         void getRecipesInteractor();
     }
-    public interface Presenter{
+
+    public interface Presenter {
         void getRecipesInteractor();
+
         void getRecipesView(List<Recipe> recipesList);
     }
 }
