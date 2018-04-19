@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.view.MainContentActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +27,20 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
     private List<Recipe> recipeList;
     private Context context;
+    private ArrayList<String> imageArrays = new ArrayList<>();
+
 
     public SelectRecipeAdapter(Context context, List<Recipe> recipeList) {
         this.recipeList = recipeList;
         this.context = context;
+
+        imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+        imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+        imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+        imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
     }
+
+
 
     @NonNull
     @Override
@@ -47,6 +57,10 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.cardTitle.setText(recipeList.get(position).getName());
         holder.cardImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+
+        Picasso.with(context)
+                .load(imageArrays.get(position))
+                .into(holder.cardImage);
     }
 
     @Override
