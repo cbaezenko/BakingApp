@@ -1,5 +1,6 @@
 package com.example.baeza.bakingapp.ui.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SelectIngredientStep extends Fragment implements IngredientStepManager.View {
 
@@ -56,6 +58,12 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
         buttonIngredient.setText(getContext().getString(R.string.ingredients) +" "+ mRecipe.getName());
 
         return rootView;
+    }
+
+    @OnClick(R.id.button_ingredient)
+    void onClick(){
+        Intent intent = new Intent(getContext(), IngredientActivity.class);
+        startActivity(intent);
     }
 
     @Override
