@@ -57,6 +57,8 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
         Picasso.with(context)
                 .load(imageArrays.get(position))
+                .placeholder(R.drawable.rectangle)
+                .error(R.drawable.rectangle)
                 .into(holder.cardImage);
     }
 

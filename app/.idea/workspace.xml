@@ -14,12 +14,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b9436d5-2332-4f36-bec7-290ddc6510c2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/main/res/drawable/rectangle.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/interactor/SelectRecipeInteractor.java" afterPath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/interactor/SelectRecipeInteractor.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/presenter/SelectRecipePresenter.java" afterPath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/presenter/SelectRecipePresenter.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/SelectRecipeAdapter.java" afterPath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/SelectRecipeAdapter.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/SelectIngredientStep.java" afterPath="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/SelectIngredientStep.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/item_ingredient.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/item_ingredient.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,28 +35,28 @@
           <leaf>
             <file leaf-file-name="item_ingredient.xml" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_ingredient.xml">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="616">
-                    <caret line="37" column="31" lean-forward="false" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+                <provider editor-type-id="text-editor">
+                  <state relative-caret-position="440">
+                    <caret line="26" column="60" lean-forward="false" selection-start-line="26" selection-start-column="60" selection-end-line="26" selection-end-column="60" />
                     <folding />
                   </state>
                 </provider>
-                <provider editor-type-id="android-designer2">
+                <provider selected="true" editor-type-id="android-designer2">
                   <state />
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="SelectIngredientStep.java" pinned="false" current-in-tab="false">
+            <file leaf-file-name="SelectIngredientStep.java" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/SelectIngredientStep.java">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="462">
-                    <caret line="47" column="33" lean-forward="false" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
+                  <state relative-caret-position="596">
+                    <caret line="74" column="64" lean-forward="false" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="MainContentActivity.java" pinned="false" current-in-tab="true">
+            <file leaf-file-name="MainContentActivity.java" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/MainContentActivity.java">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="1188">
@@ -162,28 +162,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="IngredientActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StepRecyclerViewAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/StepRecyclerViewAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -214,6 +192,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="rectangle.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/res/drawable/rectangle.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="33" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="SelectRecipeManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/manager/SelectRecipeManager.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -237,11 +228,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IngredientStepInteractor.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IngredientStepInteractor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/interactor/IngredientStepInteractor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="352">
-              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+              <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -250,8 +241,20 @@
       <file leaf-file-name="SelectRecipeAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/SelectRecipeAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1090">
-              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+            <state relative-caret-position="149">
+              <caret line="49" column="27" lean-forward="false" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IngredientActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="594">
+              <caret line="44" column="9" lean-forward="false" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -268,6 +271,13 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="resourceFile" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -2298,21 +2308,23 @@
         <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/Constants.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientFragment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/IngredientAdapter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/SelectIngredientStep.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_ingredient.xml" />
-        <option value="$PROJECT_DIR$/src/main/res/layout/item_ingredient.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/data/Recipe.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/MainContentActivity.java" />
         <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/SelectRecipeAdapter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/presenter/SelectRecipePresenter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/interactor/SelectRecipeInteractor.java" />
+        <option value="$PROJECT_DIR$/src/main/res/drawable/rectangle.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/SelectRecipeAdapter.java" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/item_ingredient.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/SelectIngredientStep.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="16" />
+    <option name="x" value="-40" />
+    <option name="y" value="3" />
     <option name="width" value="1936" />
     <option name="height" value="1029" />
   </component>
@@ -2448,6 +2460,29 @@
               <item name="bakingapp" type="462c0819:PsiDirectoryNode" />
               <item name="ui" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="app" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="app" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="app" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="app" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
           </expand>
           <select />
@@ -2677,11 +2712,18 @@
       <option name="project" value="LOCAL" />
       <updated>1524667117893</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="solved parent navigation from ingredients to ingredients-steps.">
+      <created>1524668388549</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1524668388549</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="16" y="0" width="1936" height="1029" extended-state="0" />
+    <frame x="-40" y="3" width="1936" height="1029" extended-state="0" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -2752,7 +2794,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add toolbar in the ingredient activity, populate his recyclerView and use of parent navigation. Problem: if we back to Ingredient+step fragment the app crush." />
-    <option name="LAST_COMMIT_MESSAGE" value="add toolbar in the ingredient activity, populate his recyclerView and use of parent navigation. Problem: if we back to Ingredient+step fragment the app crush." />
+    <MESSAGE value="solved parent navigation from ingredients to ingredients-steps." />
+    <option name="LAST_COMMIT_MESSAGE" value="solved parent navigation from ingredients to ingredients-steps." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2812,17 +2855,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_ingredient.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
-          <caret line="37" column="31" lean-forward="false" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.0/baf95d8519fc1a11d388f8543cb40cd2bb9d66dc/gson-2.8.0-sources.jar!/com/google/gson/stream/JsonReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
@@ -2858,14 +2890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/SelectIngredientStep.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="47" column="33" lean-forward="false" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/MainContentActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1188">
@@ -2884,28 +2908,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/StepRecyclerViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/SelectRecipeAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1090">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2922,22 +2928,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="2" column="24" lean-forward="false" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/presenter/SelectRecipePresenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/presenter/IngredientStepPresenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -2964,7 +2954,71 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/interactor/IngredientStepInteractor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/presenter/SelectRecipePresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/presenter/IngredientStepPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/drawable/rectangle.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="33" lean-forward="false" selection-start-line="3" selection-start-column="33" selection-end-line="3" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/item_ingredient.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="26" column="60" lean-forward="false" selection-start-line="26" selection-start-column="60" selection-end-line="26" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/utility/SelectRecipeAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="49" column="27" lean-forward="false" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/SelectIngredientStep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="596">
+          <caret line="74" column="64" lean-forward="false" selection-start-line="74" selection-start-column="64" selection-end-line="74" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/baeza/bakingapp/ui/view/IngredientActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="44" column="9" lean-forward="false" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
           <folding />
         </state>
       </provider>

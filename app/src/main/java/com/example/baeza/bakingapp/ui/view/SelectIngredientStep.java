@@ -72,6 +72,7 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
         Intent intent = new Intent(getContext(), IngredientActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
+        bundle.putString(Constants.RECIPE_KEY, mRecipe.getName());
         intent.putExtras(bundle);
         startActivity(intent);
     }

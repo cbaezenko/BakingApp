@@ -26,6 +26,7 @@ public class IngredientActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     List<Ingredient> mIngredientList;
+    private String recipeName = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,11 @@ public class IngredientActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
+            recipeName = savedInstanceState.getString(Constants.RECIPE_KEY);
         } else {
             Bundle bundle = getIntent().getExtras();
             mIngredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
+            recipeName = bundle.getString(Constants.RECIPE_KEY);
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -60,7 +63,7 @@ public class IngredientActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void settingToolbar() {
-        mToolbar.setTitle("NAME");
+        mToolbar.setTitle(recipeName);
         setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
@@ -68,6 +71,7 @@ public class IngredientActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
+        savedInstanceState.putString(Constants.RECIPE_KEY, recipeName);
         super.onSaveInstanceState(savedInstanceState);
     }
 }
