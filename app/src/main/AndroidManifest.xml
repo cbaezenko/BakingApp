@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:launchMode="singleTop"
             android:name=".ui.view.MainContentActivity"
             android:parentActivityName=".ui.view.SelectRecipeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>

@@ -30,7 +30,6 @@ public class SelectRecipeInteractor implements SelectRecipeManager.Interactor {
 
                     @Override
                     public void onError(Throwable e) {
-                        Timber.d("THIS IS A ERROR");
                         Timber.d(e);
                     }
 

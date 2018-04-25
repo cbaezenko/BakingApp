@@ -21,7 +21,6 @@ public class SelectRecipePresenter implements SelectRecipeManager.Presenter {
     @Override
     public void getRecipesInteractor() {
         if (view != null) {
-            Timber.d("is it running?");
             interactor.getRecipesInteractor();
         }
     }
