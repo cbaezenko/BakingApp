@@ -36,23 +36,22 @@ public class IngredientActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         if (savedInstanceState != null) {
-            mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
             recipeName = savedInstanceState.getString(Constants.RECIPE_KEY);
         } else {
             Bundle bundle = getIntent().getExtras();
             mIngredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
             recipeName = bundle.getString(Constants.RECIPE_KEY);
+
+            IngredientFragment ingredientFragment = new IngredientFragment();
+            ingredientFragment.setArguments(bundleToFragment(mIngredientList));
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, ingredientFragment)
+                    .commit();
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             settingToolbar();
         }
-
-        IngredientFragment ingredientFragment = new IngredientFragment();
-        ingredientFragment.setArguments(bundleToFragment(mIngredientList));
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, ingredientFragment)
-                .commit();
     }
 
     private Bundle bundleToFragment(List<Ingredient> ingredientList) {
@@ -70,7 +69,6 @@ public class IngredientActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
         savedInstanceState.putString(Constants.RECIPE_KEY, recipeName);
         super.onSaveInstanceState(savedInstanceState);
     }

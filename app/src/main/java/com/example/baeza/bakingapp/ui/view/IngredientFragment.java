@@ -2,6 +2,7 @@ package com.example.baeza.bakingapp.ui.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,9 @@ import com.example.baeza.bakingapp.ui.data.Ingredient;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 import com.example.baeza.bakingapp.ui.utility.IngredientAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletionService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,19 +29,25 @@ public class IngredientFragment extends Fragment {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    public IngredientFragment(){}
+    List<Ingredient> ingredientList;
+
+    public IngredientFragment() {
+    }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Context context = getContext();
         View rootView = inflater.inflate(R.layout.recyclerview, container, false);
         ButterKnife.bind(this, rootView);
 
 
-        Bundle bundle = this.getArguments();
-        assert bundle != null;
-        List<Ingredient> ingredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
-
+        if (savedInstanceState != null) {
+            ingredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
+        } else {
+            Bundle bundle = this.getArguments();
+            assert bundle != null;
+            ingredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
+        }
         IngredientAdapter ingredientAdapter = new IngredientAdapter(ingredientList);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
@@ -46,5 +55,10 @@ public class IngredientFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle saveInstanceState) {
+        saveInstanceState.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) ingredientList);
     }
 }
