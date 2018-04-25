@@ -22,7 +22,10 @@
             android:name=".ui.view.MainContentActivity"
             android:parentActivityName=".ui.view.SelectRecipeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".ui.view.IngredientActivity"/>
+
+        <activity android:name=".ui.view.IngredientActivity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                  android:parentActivityName=".ui.view.MainContentActivity"/>
     </application>
 
 </manifest>

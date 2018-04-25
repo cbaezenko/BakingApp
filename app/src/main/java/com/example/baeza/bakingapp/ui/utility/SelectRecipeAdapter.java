@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapter.ViewHolder> {
 
     private List<Recipe> recipeList;
@@ -33,6 +35,8 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
     public SelectRecipeAdapter(Context context, List<Recipe> recipeList) {
         this.recipeList = recipeList;
         this.context = context;
+
+        Timber.d( "THIS SHOULD APPEAR ");
 
         imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
         imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
@@ -91,10 +95,11 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(Constants.RECIPE_KEY, recipeList.get(clickedPosition));
-            bundle.putParcelableArrayList("steps", (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getSteps());
+            bundle.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getSteps());
+            bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getIngredients());
 
             Intent intent = new Intent(context, MainContentActivity.class);
-            intent.putExtra("bundle", bundle);
+            intent.putExtra(Constants.RECIPE_KEY, bundle);
             context.startActivity(intent);
         }
     }

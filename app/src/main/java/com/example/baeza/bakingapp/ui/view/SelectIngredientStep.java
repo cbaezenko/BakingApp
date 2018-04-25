@@ -2,6 +2,7 @@ package com.example.baeza.bakingapp.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,17 +12,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.baeza.bakingapp.R;
+import com.example.baeza.bakingapp.ui.data.Ingredient;
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.data.Step;
 import com.example.baeza.bakingapp.ui.manager.IngredientStepManager;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 import com.example.baeza.bakingapp.ui.utility.StepRecyclerViewAdapter;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class SelectIngredientStep extends Fragment implements IngredientStepManager.View {
 
@@ -32,6 +37,7 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
     RecyclerView recyclerViewSteps;
     Recipe mRecipe;
     List<Step> mStepList;
+    List<Ingredient> mIngredientList;
     StepRecyclerViewAdapter mStepRecyclerViewAdapter;
 
     public SelectIngredientStep() {}
@@ -44,7 +50,8 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
         ButterKnife.bind(this, rootView);
         if (bundle != null) {
             mRecipe = bundle.getParcelable(Constants.RECIPE_KEY);
-            mStepList = bundle.getParcelableArrayList("steps");
+            mStepList = bundle.getParcelableArrayList(Constants.STEP_LIST_KEY);
+            mIngredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false);
@@ -63,6 +70,9 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
     @OnClick(R.id.button_ingredient)
     void onClick(){
         Intent intent = new Intent(getContext(), IngredientActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
