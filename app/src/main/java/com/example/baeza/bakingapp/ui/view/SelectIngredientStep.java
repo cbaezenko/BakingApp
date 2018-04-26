@@ -56,7 +56,7 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false);
 
-        mStepRecyclerViewAdapter = new StepRecyclerViewAdapter(getContext(), mStepList);
+        mStepRecyclerViewAdapter = new StepRecyclerViewAdapter(getContext(), mStepList, mRecipe.getName());
 
         recyclerViewSteps.setAdapter(mStepRecyclerViewAdapter);
         recyclerViewSteps.setHasFixedSize(true);

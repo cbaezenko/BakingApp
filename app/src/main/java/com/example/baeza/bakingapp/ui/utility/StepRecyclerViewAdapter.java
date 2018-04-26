@@ -2,6 +2,7 @@ package com.example.baeza.bakingapp.ui.utility;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,9 +21,11 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
     private List <Step> stepList;
     private  Context context;
-    public StepRecyclerViewAdapter(Context context, List<Step> stepList){
+    private String recipeName;
+    public StepRecyclerViewAdapter(Context context, List<Step> stepList, String recipeName){
         this.context = context;
         this.stepList = stepList;
+        this.recipeName = recipeName;
     }
 
     @NonNull
@@ -57,10 +60,14 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         @Override
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
-            Toast.makeText(context, "clicked "+clickedPosition, Toast.LENGTH_SHORT).show();
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants.STEP_CONTENT, stepList.get(clickedPosition));
+            bundle.putString(Constants.RECIPE_NAME, recipeName);
+
             Intent intent = new Intent(context, StepActivity.class);
+            intent.putExtras(bundle);
             context.startActivity(intent);
         }
     }
-
 }
