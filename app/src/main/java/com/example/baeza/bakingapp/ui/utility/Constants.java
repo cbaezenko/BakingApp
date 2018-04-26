@@ -9,4 +9,6 @@ public class Constants {
 
     public static final String STEP_CONTENT = "step_content";
     public static final String RECIPE_NAME = "recipe_name";
+
+    public static final String MEDIA_SESSION_TAG = "media_session_tag";
 }
