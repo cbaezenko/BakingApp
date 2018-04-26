@@ -1,15 +1,18 @@
 package com.example.baeza.bakingapp.ui.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Step;
+import com.example.baeza.bakingapp.ui.view.StepActivity;
 
 import java.util.List;
 
@@ -48,11 +51,15 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         public ViewHolder(View itemView) {
             super(itemView);
             texStep = itemView.findViewById(R.id.text_step);
+            texStep.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             int clickedPosition = getAdapterPosition();
+            Toast.makeText(context, "clicked "+clickedPosition, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, StepActivity.class);
+            context.startActivity(intent);
         }
     }
 
