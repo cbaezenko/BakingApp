@@ -54,6 +54,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.cardTitle.setText(recipeList.get(position).getName());
         holder.cardImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+        holder.tvPortion.setText(String.format("%d", recipeList.get(position).getServings()));
 
         Picasso.with(context)
                 .load(imageArrays.get(position))
@@ -71,7 +72,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
         CardView cardView;
         ImageView cardImage;
-        TextView cardTitle;
+        TextView cardTitle, tvPortion;
         Button buttonShow;
 
         public ViewHolder(View itemView) {
@@ -80,6 +81,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
             cardImage = itemView.findViewById(R.id.card_image);
             cardTitle = itemView.findViewById(R.id.card_title);
             buttonShow = itemView.findViewById(R.id.button_ingredient);
+            tvPortion = itemView.findViewById(R.id.tv_portion);
             buttonShow.setOnClickListener(this);
         }
 

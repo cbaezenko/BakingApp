@@ -43,6 +43,26 @@
                 android:layout_below="@id/card_title"
                 android:text="@string/show"
                 android:textColor="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_portion"
+                android:layout_below="@+id/card_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="56dp"
+                android:layout_marginTop="16dp"
+                android:textAppearance="?android:textAppearanceMedium"/>
+
+            <ImageView
+                android:id="@+id/icon_portion"
+                android:layout_marginTop="16dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/card_image"
+                android:layout_marginEnd="19dp"
+                android:src="@drawable/ic_person_black_24dp"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
