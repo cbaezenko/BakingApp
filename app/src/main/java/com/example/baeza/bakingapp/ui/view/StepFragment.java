@@ -23,6 +23,7 @@ import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
@@ -30,7 +31,11 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.TransferListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +53,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private MediaSessionCompat mSessionCompat;
     private PlaybackStateCompat.Builder mStateBuilder;
     private SimpleExoPlayer mExoPlayer;
+    private Step mStep;
 
     public StepFragment() {
     }
@@ -59,15 +65,15 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         ButterKnife.bind(this, rootView);
 
         if (getArguments() == null) return null;
-        Step step = getArguments().getParcelable(Constants.STEP_CONTENT);
-        assert step != null;
-        fillLayout(step);
+        mStep = getArguments().getParcelable(Constants.STEP_CONTENT);
+        assert mStep != null;
+        fillLayout(mStep);
 
         mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(), R.drawable.rectangle));
 
         initializeMediaSession(getContext());
 
-        initializePlayer(uri);
+        initializePlayer(mStep.getVideoURL());
 
         return rootView;
     }
@@ -98,7 +104,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         mSessionCompat.setActive(true);
     }
 
-    private void initializePlayer(Uri uri){
+    private void initializePlayer(String uriString){
         if(mExoPlayer == null){
             //create an instance of the exoPlayer
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -110,15 +116,30 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             mExoPlayer.addListener(this);
 
             //Prepare the mediaSource
-            mExoPlayer.prepare(buildMediaSource(uri));
+            mExoPlayer.prepare(buildMediaSource(uriString));
             mExoPlayer.setPlayWhenReady(true);
         }
     }
 
-    private MediaSource buildMediaSource(Uri uri) {
-        return ExtractorMediaSource.Factory(
-                new DefaultHttpDataSourceFactory("exoplayer-codelab")).
-                createMediaSource(uri);
+    private void releasePlayer(){
+        mExoPlayer.stop();
+        mExoPlayer.release();
+        mExoPlayer = null;
+    }
+
+    private MediaSource buildMediaSource(String uriString) {
+
+        BandwidthMeter bandWidthMeter = new DefaultBandwidthMeter();
+        DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
+                "BakingApp",
+                (TransferListener<? super DataSource>) bandWidthMeter);
+        DefaultExtractorsFactory defaultExtractorsFactory = new DefaultExtractorsFactory();
+
+        return new ExtractorMediaSource(Uri.parse(uriString),
+                dataSourceFactory,
+                defaultExtractorsFactory,
+                null,
+                null);
     }
 
     private void fillLayout(Step step) {
@@ -134,6 +155,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     @Override
     public void onDestroy(){
         super.onDestroy();
+        releasePlayer();
         mSessionCompat.setActive(false);
     }
 
