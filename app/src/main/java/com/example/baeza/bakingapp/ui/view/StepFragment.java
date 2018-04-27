@@ -49,6 +49,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     TextView tvShortDescription;
     @BindView(R.id.tv_description)
     TextView tvDescription;
+    @BindView(R.id.tv_exo_player_no_info)
+    TextView tvExoPlayerNoInfo;
 
     private MediaSessionCompat mSessionCompat;
     private PlaybackStateCompat.Builder mStateBuilder;
@@ -69,11 +71,18 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         assert mStep != null;
         fillLayout(mStep);
 
-        mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(), R.drawable.rectangle));
+        if(mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")){
 
-        initializeMediaSession(getContext());
+            mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
+                    R.drawable.rectangle));
 
-        initializePlayer(mStep.getVideoURL());
+            initializeMediaSession(getContext());
+            initializePlayer(mStep.getVideoURL());
+
+        } else if(mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")){
+            mSimpleExoPlayerView.setVisibility(View.INVISIBLE);
+            tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+        }
 
         return rootView;
     }
