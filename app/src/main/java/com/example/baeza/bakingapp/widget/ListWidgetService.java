@@ -1,13 +1,27 @@
 package com.example.baeza.bakingapp.widget;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.baeza.bakingapp.R;
+import com.example.baeza.bakingapp.ui.data.Recipe;
+import com.example.baeza.bakingapp.ui.data.network.utilities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class ListWidgetService extends RemoteViewsService{
+
+    private List<Recipe> mRecipeList = new ArrayList<>();
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -25,12 +39,14 @@ public class ListWidgetService extends RemoteViewsService{
 
         @Override
         public void onCreate() {
-
         }
 
         @Override
         public void onDataSetChanged() {
-
+            getRetrofitAnswer();
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+            int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingAppWidget.class));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_list);
         }
 
         @Override
@@ -46,7 +62,11 @@ public class ListWidgetService extends RemoteViewsService{
         @Override
         public RemoteViews getViewAt(int i) {
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item_ingredient);
-            views.setTextViewText(R.id.item_list, "HOLA");
+            if(mRecipeList != null && (mRecipeList.size()>0)){
+                views.setTextViewText(R.id.item_list, mRecipeList.get(0).getIngredients().get(i).getIngredient());
+//                views.setTextViewText(R.id.item_list, "ALGO");
+            }else{
+            views.setTextViewText(R.id.item_list, "HOLA");}
             return views;
         }
 
@@ -69,5 +89,26 @@ public class ListWidgetService extends RemoteViewsService{
         public boolean hasStableIds() {
             return false;
         }
+    }
+
+    private void getRetrofitAnswer() {
+        utilities.getIngredientService().getRecipe()
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Recipe>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.d(e);
+                    }
+
+                    @Override
+                    public void onNext(List<Recipe> recipeList) {
+                        mRecipeList = recipeList;
+                    }
+                });
+
     }
 }
