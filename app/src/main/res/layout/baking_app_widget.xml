@@ -1,19 +1,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#09C"
                 android:padding="@dimen/widget_margin">
 
-    <ImageView
-        android:src="@drawable/ic_launcher_background"
-        android:id="@+id/appwidget_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ListView
+        android:id="@+id/appwidget_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_and_buttons_layout"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_margin="8dp"
-        android:background="#09C"
-        android:contentDescription="@string/appwidget_text"
+        android:background="@android:color/darker_gray"
+        android:src="@drawable/ic_launcher_background"
         />
 
+    <LinearLayout
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:id="@+id/title_and_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_marginLeft="8dp"
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/button_back_recipe"
+            android:src="@drawable/ic_arrow_back_24dp"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Recipe"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textColor="@android:color/white"/>
+
+        <ImageButton
+            android:layout_marginRight="8dp"
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/button_next_recipe"
+            android:src="@drawable/ic_arrow_forward_24dp"/>
+    </LinearLayout>
 </RelativeLayout>

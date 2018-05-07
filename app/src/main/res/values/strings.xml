@@ -10,4 +10,7 @@
     <string name="no_video">No video Available</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="button_next_recipe">Button Next Recipe</string>
+    <string name="button_back_recipe">Button Back Recipe</string>
 </resources>
