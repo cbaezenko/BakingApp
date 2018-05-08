@@ -32,6 +32,12 @@
             android:parentActivityName=".ui.view.MainContentActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
+        <!--<activity android:name=".AppWidgetConfigure">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
         <receiver android:name=".widget.BakingAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
