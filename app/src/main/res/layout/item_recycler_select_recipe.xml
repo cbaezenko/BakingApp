@@ -13,7 +13,6 @@
                                         android:layout_marginBottom="@dimen/mp_keylines"
                                         android:layout_marginLeft="@dimen/mp_keylines"
                                         android:layout_marginRight="@dimen/mp_keylines"
-                                        android:foreground="?attr/selectableItemBackground"
                                         card_view:cardCornerRadius="4dp">
 
         <RelativeLayout

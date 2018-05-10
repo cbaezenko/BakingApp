@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
@@ -27,11 +29,14 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
     private List<Recipe> recipeList;
     private Context context;
     private ArrayList<String> imageArrays = new ArrayList<>();
+    private FavoriteRecipe mFavoriteRecipe;
 
 
     public SelectRecipeAdapter(Context context, List<Recipe> recipeList) {
         this.recipeList = recipeList;
         this.context = context;
+
+        mFavoriteRecipe = new FavoriteRecipe(context);
 
         imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
         imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
@@ -56,6 +61,12 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         holder.cardImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         holder.tvPortion.setText(String.format("%d", recipeList.get(position).getServings()));
 
+        if (mFavoriteRecipe.getRecipeIdFromPref() == recipeList.get(position).getId()) {
+            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_yellow_24dp));
+        } else if (mFavoriteRecipe.getRecipeIdFromPref() != recipeList.get(position).getId()) {
+            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp));
+        }
+
         Picasso.with(context)
                 .load(imageArrays.get(position))
                 .placeholder(R.drawable.rectangle)
@@ -74,6 +85,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         ImageView cardImage;
         TextView cardTitle, tvPortion;
         Button buttonShow;
+        ImageButton imageButton_favorite;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -82,22 +94,31 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
             cardTitle = itemView.findViewById(R.id.card_title);
             buttonShow = itemView.findViewById(R.id.button_ingredient);
             tvPortion = itemView.findViewById(R.id.tv_portion);
+            imageButton_favorite = itemView.findViewById(R.id.imageButton_favorite);
+
+            imageButton_favorite.setOnClickListener(this);
             buttonShow.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
 
-            int clickedPosition = getAdapterPosition();
+            if (view.getId() == R.id.imageButton_favorite) {
+                mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition() + 1);
+                notifyDataSetChanged();
+            } else {
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(Constants.RECIPE_KEY, recipeList.get(clickedPosition));
-            bundle.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getSteps());
-            bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getIngredients());
+                int clickedPosition = getAdapterPosition();
 
-            Intent intent = new Intent(context, MainContentActivity.class);
-            intent.putExtra(Constants.RECIPE_KEY, bundle);
-            context.startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants.RECIPE_KEY, recipeList.get(clickedPosition));
+                bundle.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getSteps());
+                bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) recipeList.get(clickedPosition).getIngredients());
+
+                Intent intent = new Intent(context, MainContentActivity.class);
+                intent.putExtra(Constants.RECIPE_KEY, bundle);
+                context.startActivity(intent);
+            }
         }
     }
 }

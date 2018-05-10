@@ -1,6 +1,7 @@
 package com.example.baeza.bakingapp.ui.utility;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 public class FavoriteRecipe {
 
@@ -12,7 +13,15 @@ public class FavoriteRecipe {
         this.context = context;
     }
 
-    public void saveToPref(){}
+    public void saveRecipeIdToPref(int id){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.ID_RECIPE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(Constants.ID_RECIPE, id);
+        editor.apply();
+    }
 
-    public void getFromPref(){}
+    public int getRecipeIdFromPref(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.ID_RECIPE, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(Constants.ID_RECIPE, 1);
+    }
 }
