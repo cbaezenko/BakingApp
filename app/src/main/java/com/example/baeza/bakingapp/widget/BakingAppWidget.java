@@ -13,6 +13,7 @@ import com.example.baeza.bakingapp.R;
  */
 public class BakingAppWidget extends AppWidgetProvider {
 
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
@@ -21,14 +22,7 @@ public class BakingAppWidget extends AppWidgetProvider {
 
         Intent intent = new Intent(context, ListWidgetService.class);
         views.setRemoteAdapter(R.id.appwidget_list, intent);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
 
-//        views.setOnClickPendingIntent(R.id.appwidget_list, pendingIntent);
-
-//        PendingIntent appPendingIntent = PendingIntent.getActivity(0, ap)
-
-//        views.setOnClickPendingIntent(R.id.text_recipes, pendingIntent);
-        // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
