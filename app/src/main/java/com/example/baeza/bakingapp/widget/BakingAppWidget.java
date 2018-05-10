@@ -7,21 +7,24 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.example.baeza.bakingapp.R;
+import com.example.baeza.bakingapp.ui.utility.FavoriteRecipe;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class BakingAppWidget extends AppWidgetProvider {
 
-
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
+
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
 
         Intent intent = new Intent(context, ListWidgetService.class);
         views.setRemoteAdapter(R.id.appwidget_list, intent);
+
+        views.setTextViewText(R.id.text_recipes, new FavoriteRecipe(context).getRecipeNameFromPref());
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }

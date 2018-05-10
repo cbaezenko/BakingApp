@@ -42,7 +42,6 @@
             android:gravity="center"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="Recipe"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/lightColorWidget"/>
 

@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
@@ -105,6 +104,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
             if (view.getId() == R.id.imageButton_favorite) {
                 mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition() + 1);
+                mFavoriteRecipe.saveRecipeNameToPref(recipeList.get(getAdapterPosition()).getName());
                 notifyDataSetChanged();
             } else {
 
