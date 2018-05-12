@@ -19,14 +19,14 @@ import com.example.baeza.bakingapp.ui.manager.IngredientStepManager;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 import com.example.baeza.bakingapp.ui.utility.StepRecyclerViewAdapter;
 
-import java.sql.Time;
+//import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
+//import timber.log.Timber;
 
 public class SelectIngredientStep extends Fragment implements IngredientStepManager.View {
 
@@ -54,7 +54,7 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
             mIngredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
         }
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false);
 
         mStepRecyclerViewAdapter = new StepRecyclerViewAdapter(getContext(), mStepList, mRecipe.getName());
 

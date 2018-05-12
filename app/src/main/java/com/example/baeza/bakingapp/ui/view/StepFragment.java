@@ -69,17 +69,19 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         assert step != null;
         fillLayout(step);
 
-        if (step.getVideoURL() != null && !step.getVideoURL().isEmpty() && !step.getVideoURL().equals("")) {
+        if(step!=null) {
+            if (step.getVideoURL() != null && !step.getVideoURL().isEmpty() && !step.getVideoURL().equals("")) {
 
-            mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
-                    R.drawable.rectangle));
+                mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
+                        R.drawable.rectangle));
 
-            initializeMediaSession(getContext());
-            initializePlayer(step.getVideoURL());
+                initializeMediaSession(getContext());
+                initializePlayer(step.getVideoURL());
 
-        } else if (step.getVideoURL() == null || step.getVideoURL().isEmpty() || step.getVideoURL().equals("")) {
-            mSimpleExoPlayerView.setVisibility(View.INVISIBLE);
-            tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+            } else if (step.getVideoURL() == null || step.getVideoURL().isEmpty() || step.getVideoURL().equals("")) {
+                mSimpleExoPlayerView.setVisibility(View.INVISIBLE);
+                tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+            }
         }
 
         return rootView;
@@ -150,8 +152,14 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     private void fillLayout(Step step) {
+        if(step!=null){
         tvShortDescription.setText(step.getShortDescription());
-        tvDescription.setText(step.getDescription());
+        tvDescription.setText(step.getDescription());}
+        else{
+            tvShortDescription.setText("hola");
+            tvDescription.setText("mundo");
+        }
+
     }
 
     @Override
