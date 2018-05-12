@@ -13,8 +13,6 @@ import com.example.baeza.bakingapp.ui.data.Ingredient;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
 
     private List<Ingredient> mIngredientList;

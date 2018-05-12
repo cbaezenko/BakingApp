@@ -3,6 +3,8 @@ package com.example.baeza.bakingapp.ui.utility;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.baeza.bakingapp.widget.RecipeService;
+
 import timber.log.Timber;
 
 public class FavoriteRecipe {
@@ -20,6 +22,8 @@ public class FavoriteRecipe {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(Constants.ID_RECIPE, id);
         editor.apply();
+
+        RecipeService.startActionUpdateRecipe(context);
     }
 
     public int getRecipeIdFromPref(){
@@ -35,6 +39,9 @@ public class FavoriteRecipe {
         Timber.d("SAVING THIS VALUE TO PREFS" +name);
 
         editor.apply();
+
+//        RecipeService.startActionUpdateRecipe(context);
+
     }
 
     public  String getRecipeNameFromPref(){

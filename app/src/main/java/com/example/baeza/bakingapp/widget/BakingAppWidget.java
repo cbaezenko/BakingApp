@@ -9,6 +9,8 @@ import android.widget.RemoteViews;
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.utility.FavoriteRecipe;
 
+import timber.log.Timber;
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -45,6 +47,14 @@ public class BakingAppWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    public static void updateRecipeWidget(Context context,
+                                          AppWidgetManager appWidgetManager,
+                                          int [] appWidgetIds){
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
+        }
     }
 }
 

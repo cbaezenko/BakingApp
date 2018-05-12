@@ -23,8 +23,6 @@ import timber.log.Timber;
 public class ListWidgetService extends RemoteViewsService{
 
     private List<Recipe> mRecipeList = new ArrayList<>();
-    private FavoriteRecipe mFavoriteRecipe;
-    private int recipeId;
     private Context mContext;
 
     @Override
@@ -36,12 +34,11 @@ public class ListWidgetService extends RemoteViewsService{
 
         public ListRemoteViewsFactory (Context applicationContext){
             mContext = applicationContext;
-            mFavoriteRecipe = new FavoriteRecipe(mContext);
-            recipeId = mFavoriteRecipe.getRecipeIdFromPref();
         }
 
         @Override
         public void onCreate() {
+            getRetrofitAnswer();
         }
 
         @Override
@@ -56,7 +53,8 @@ public class ListWidgetService extends RemoteViewsService{
         @Override
         public int getCount() {
             if(mRecipeList.size()==0)return 0;
-            if(mRecipeList.get(recipeId).getIngredients().size()!=0) return mRecipeList.get(recipeId).getIngredients().size();
+            if(mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().size()!=0)
+                return mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().size();
             return 0;
         }
 
@@ -64,7 +62,11 @@ public class ListWidgetService extends RemoteViewsService{
         public RemoteViews getViewAt(int i) {
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item_ingredient);
             if(mRecipeList != null && (mRecipeList.size()>0)){
-                views.setTextViewText(R.id.item_list, mRecipeList.get(recipeId).getIngredients().get(i).getIngredient());
+                views.setTextViewText(R.id.item_list, mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getIngredient());
+
+                Timber.d("recipe name"+new FavoriteRecipe(mContext).getRecipeNameFromPref());
+                Timber.d("recipeId"+new FavoriteRecipe(mContext).getRecipeIdFromPref());
+
             }else{
             views.setTextViewText(R.id.item_list, "HOLA");}
             return views;
@@ -108,10 +110,13 @@ public class ListWidgetService extends RemoteViewsService{
                     public void onNext(List<Recipe> recipeList) {
                         mRecipeList = recipeList;
 
+                        //sin esto no actualiza, con esto actualiza infinito.
+
                         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
                         int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingAppWidget.class));
 
                         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_list);
+
                     }
                 });
     }
