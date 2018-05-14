@@ -3,6 +3,8 @@
     <string name="image_recipe_card">Image recipe card</string>
     <string name="show">Show</string>
 
+    <string name="saved_to_widget">Saved to Widget</string>
+
     <string name="ingredients">Ingredients</string>
     <string name="step">Step </string>
     <string name="next_step">Next Step</string>

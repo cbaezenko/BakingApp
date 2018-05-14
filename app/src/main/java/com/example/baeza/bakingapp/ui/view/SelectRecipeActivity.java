@@ -1,5 +1,6 @@
 package com.example.baeza.bakingapp.ui.view;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +24,8 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.coordinator)
+    CoordinatorLayout mCoordinatorLayout;
 
     SelectRecipeAdapter mAdapter;
     SelectRecipePresenter mPresenter;
@@ -56,7 +59,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     }
 
     private void populateRecyclerView(List<Recipe> recipeList) {
-        mAdapter = new SelectRecipeAdapter(this, recipeList);
+        mAdapter = new SelectRecipeAdapter(this, recipeList, mCoordinatorLayout);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);

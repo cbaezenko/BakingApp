@@ -42,10 +42,7 @@ public class ListWidgetService extends RemoteViewsService{
         }
 
         @Override
-        public void onDataSetChanged() {
-
-//            getRetrofitAnswer();
-        }
+        public void onDataSetChanged() { }
 
         @Override
         public void onDestroy() {
@@ -111,13 +108,10 @@ public class ListWidgetService extends RemoteViewsService{
                     public void onNext(List<Recipe> recipeList) {
                         mRecipeList = recipeList;
 
-                        //sin esto no actualiza, con esto actualiza infinito.
+                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+                        int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingAppWidget.class));
 
-//                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
-//                        int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(mContext, BakingAppWidget.class));
-//
-//                        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_list);
-
+                        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_list);
                     }
                 });
     }

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,11 +31,12 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
     private Context context;
     private ArrayList<String> imageArrays = new ArrayList<>();
     private FavoriteRecipe mFavoriteRecipe;
+    private CoordinatorLayout mCoordinatorLayout;
 
-
-    public SelectRecipeAdapter(Context context, List<Recipe> recipeList) {
+    public SelectRecipeAdapter(Context context, List<Recipe> recipeList, CoordinatorLayout coordinatorLayout) {
         this.recipeList = recipeList;
         this.context = context;
+        this.mCoordinatorLayout = coordinatorLayout;
 
         mFavoriteRecipe = new FavoriteRecipe(context);
 
@@ -105,6 +108,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
             if (view.getId() == R.id.imageButton_favorite) {
                 mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition());
                 mFavoriteRecipe.saveRecipeNameToPref(recipeList.get(getAdapterPosition()).getName());
+                showSnack();
                 notifyDataSetChanged();
             } else {
 
@@ -120,5 +124,11 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
                 context.startActivity(intent);
             }
         }
+    }
+
+    private void showSnack(){
+        Snackbar snackbar = Snackbar
+                .make(mCoordinatorLayout, context.getString(R.string.saved_to_widget), Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

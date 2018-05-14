@@ -21,7 +21,6 @@ import timber.log.Timber;
 public class FavoriteRecipe {
 
     private Context context;
-
     public FavoriteRecipe(){}
 
     public FavoriteRecipe(Context context){
@@ -47,19 +46,13 @@ public class FavoriteRecipe {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(Constants.RECIPE_NAME, name);
 
-        Timber.d("SAVING THIS VALUE TO PREFS" +name);
-
         editor.apply();
-
         informWidgetToUpdate();
-
-//        RecipeService.startActionUpdateRecipe(context);
 
     }
 
     public  String getRecipeNameFromPref(){
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.RECIPE_NAME, Context.MODE_PRIVATE);
-        Timber.d("VALOR DE PREFS "+sharedPreferences.getString(Constants.RECIPE_NAME, "Recipel"));
         return sharedPreferences.getString(Constants.RECIPE_NAME, "Recipel");
     }
 
@@ -67,14 +60,12 @@ public class FavoriteRecipe {
         getRetrofitAnswer();
     }
 
-
     private void getRetrofitAnswer() {
         utilities.getIngredientService().getRecipe()
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Recipe>>() {
                     @Override
-                    public void onCompleted() {
-                    }
+                    public void onCompleted() { }
 
                     @Override
                     public void onError(Throwable e) {
@@ -83,9 +74,6 @@ public class FavoriteRecipe {
 
                     @Override
                     public void onNext(List<Recipe> recipeList) {
-//                        mRecipeList = recipeList;
-
-                        //sin esto no actualiza, con esto actualiza infinito.
 
                         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                         int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingAppWidget.class));
