@@ -2,9 +2,9 @@ package com.example.baeza.bakingapp.ui.view;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Ingredient;
@@ -36,58 +36,29 @@ public class MainContentActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        if (savedInstanceState != null) {
+            retrieveInfoForSavedInstanceState(savedInstanceState);
+        } else {
+            retrieveInfoBundle();
+        }
+        createBundleToFragment();
+
         //check for phone or tablet
 
         if (findViewById(R.id.layout_two_pane) != null) {
             mTwoPane = true;
-            Toast.makeText(this, "tablet view", Toast.LENGTH_SHORT).show();
 
-            if (savedInstanceState != null) {
-                retrieveInfoForSavedInstanceState(savedInstanceState);
-            } else {
-                retrieveInfoBundle();
-            }
-            retrieveInfoBundle();
-
-            createBundleToFragment();
-
-            StepFragment stepFragment = new StepFragment();
-            stepFragment.setArguments(bundleToFragment);
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detail_container, stepFragment)
-                    .commit();
-
-            SelectIngredientStep selectIngredientStep  = new SelectIngredientStep();
-            selectIngredientStep.setArguments(bundleToFragment);
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.menu_fragment, selectIngredientStep)
-                    .commit();
-
-            settingToolbar();
+            setFragment(new SelectIngredientStep(), R.id.menu_fragment, bundleToFragment);
+            setFragment(new StepFragment(), R.id.detail_container, bundleToFragment);
 
         } else {
             mTwoPane = false;
+            setFragment(new SelectIngredientStep(), R.id.menu_fragment, bundleToFragment);
 
-            if (savedInstanceState != null) {
-                retrieveInfoForSavedInstanceState(savedInstanceState);
-            } else {
-                retrieveInfoBundle();
-            }
-            retrieveInfoBundle();
-
-            createBundleToFragment();
-
-            SelectIngredientStep selectIngredientStep = new SelectIngredientStep();
-            selectIngredientStep.setArguments(bundleToFragment);
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.detail_container, selectIngredientStep)
-                    .commit();
-
-            settingToolbar();
         }
+
+        settingToolbar();
+
     }
 
     public void settingToolbar() {
@@ -114,6 +85,14 @@ public class MainContentActivity extends AppCompatActivity {
         recipe = savedInstanceState.getParcelable(Constants.RECIPE_KEY);
         stepList = savedInstanceState.getParcelableArrayList(Constants.STEP_LIST_KEY);
         mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
+    }
+
+    private void setFragment(Fragment fragment, int container, Bundle bundle) {
+        fragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .add(container, fragment)
+                .commit();
     }
 
     @Override

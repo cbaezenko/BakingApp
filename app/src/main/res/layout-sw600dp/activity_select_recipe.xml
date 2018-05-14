@@ -8,6 +8,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.view.SelectRecipeActivity">
 
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -21,5 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </android.support.v7.widget.RecyclerView>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </android.support.constraint.ConstraintLayout>

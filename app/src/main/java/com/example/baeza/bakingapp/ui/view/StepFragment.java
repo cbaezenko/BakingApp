@@ -3,11 +3,13 @@ package com.example.baeza.bakingapp.ui.view;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -156,8 +158,12 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         tvShortDescription.setText(step.getShortDescription());
         tvDescription.setText(step.getDescription());}
         else{
-            tvShortDescription.setText("hola");
-            tvDescription.setText("mundo");
+//            tvShortDescription.setText("hola");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                tvDescription.setTextAppearance(android.R.style.TextAppearance_Large);
+            }
+            tvDescription.setGravity(Gravity.CENTER);
+            tvDescription.setText(getContext().getResources().getString(R.string.no_item_selected));
         }
 
     }
