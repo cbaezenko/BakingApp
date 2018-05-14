@@ -1,10 +1,21 @@
 package com.example.baeza.bakingapp.ui.utility;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.baeza.bakingapp.R;
+import com.example.baeza.bakingapp.ui.data.Recipe;
+import com.example.baeza.bakingapp.ui.data.network.utilities;
+import com.example.baeza.bakingapp.widget.BakingAppWidget;
 import com.example.baeza.bakingapp.widget.RecipeService;
 
+import java.util.List;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class FavoriteRecipe {
@@ -40,6 +51,8 @@ public class FavoriteRecipe {
 
         editor.apply();
 
+        informWidgetToUpdate();
+
 //        RecipeService.startActionUpdateRecipe(context);
 
     }
@@ -48,5 +61,38 @@ public class FavoriteRecipe {
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.RECIPE_NAME, Context.MODE_PRIVATE);
         Timber.d("VALOR DE PREFS "+sharedPreferences.getString(Constants.RECIPE_NAME, "Recipel"));
         return sharedPreferences.getString(Constants.RECIPE_NAME, "Recipel");
+    }
+
+    private void informWidgetToUpdate(){
+        getRetrofitAnswer();
+    }
+
+
+    private void getRetrofitAnswer() {
+        utilities.getIngredientService().getRecipe()
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Recipe>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.d(e);
+                    }
+
+                    @Override
+                    public void onNext(List<Recipe> recipeList) {
+//                        mRecipeList = recipeList;
+
+                        //sin esto no actualiza, con esto actualiza infinito.
+
+                        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                        int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingAppWidget.class));
+
+                        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_list);
+
+                    }
+                });
     }
 }

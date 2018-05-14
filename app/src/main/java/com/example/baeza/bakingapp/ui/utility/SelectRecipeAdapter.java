@@ -60,9 +60,9 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         holder.cardImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         holder.tvPortion.setText(String.format("%d", recipeList.get(position).getServings()));
 
-        if (mFavoriteRecipe.getRecipeIdFromPref() == recipeList.get(position).getId()) {
+        if ((mFavoriteRecipe.getRecipeIdFromPref()+1) == recipeList.get(position).getId()) {
             holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_yellow_24dp));
-        } else if (mFavoriteRecipe.getRecipeIdFromPref() != recipeList.get(position).getId()) {
+        } else if ((mFavoriteRecipe.getRecipeIdFromPref() +1) != recipeList.get(position).getId()) {
             holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp));
         }
 
@@ -103,7 +103,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         public void onClick(View view) {
 
             if (view.getId() == R.id.imageButton_favorite) {
-                mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition() + 1);
+                mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition());
                 mFavoriteRecipe.saveRecipeNameToPref(recipeList.get(getAdapterPosition()).getName());
                 notifyDataSetChanged();
             } else {
