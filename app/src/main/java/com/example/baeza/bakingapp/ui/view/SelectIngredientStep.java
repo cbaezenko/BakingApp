@@ -1,5 +1,6 @@
 package com.example.baeza.bakingapp.ui.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -16,19 +17,19 @@ import com.example.baeza.bakingapp.ui.data.Ingredient;
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.data.Step;
 import com.example.baeza.bakingapp.ui.manager.IngredientStepManager;
+import com.example.baeza.bakingapp.ui.manager.OnFragmentSelectedListener;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 import com.example.baeza.bakingapp.ui.utility.StepRecyclerViewAdapter;
 
-//import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-//import timber.log.Timber;
 
-public class SelectIngredientStep extends Fragment implements IngredientStepManager.View {
+public class SelectIngredientStep extends Fragment implements IngredientStepManager.View,
+StepRecyclerViewAdapter.ListenStep{
 
     @BindView(R.id.button_ingredient)
     Button buttonIngredient;
@@ -39,6 +40,23 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
     List<Step> mStepList;
     List<Ingredient> mIngredientList;
     StepRecyclerViewAdapter mStepRecyclerViewAdapter;
+    private boolean twoPane;
+
+    private OnFragmentSelectedListener mCallback;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        //This makes sure that the host activity has implemented the callback interface
+        //if not, it throws an exception
+         try {
+             mCallback = (OnFragmentSelectedListener) context;
+         }catch (ClassCastException e){
+             throw new ClassCastException(context.toString()+
+             "must implement OnFragmentSelectedListener");
+         }
+    }
 
     public SelectIngredientStep() {}
 
@@ -52,11 +70,12 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
             mRecipe = bundle.getParcelable(Constants.RECIPE_KEY);
             mStepList = bundle.getParcelableArrayList(Constants.STEP_LIST_KEY);
             mIngredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
+            twoPane = bundle.getBoolean(Constants.SCREEN_PANES);
         }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false);
 
-        mStepRecyclerViewAdapter = new StepRecyclerViewAdapter(getContext(), mStepList, mRecipe.getName());
+        mStepRecyclerViewAdapter = new StepRecyclerViewAdapter(getContext(), mStepList, mRecipe.getName(), twoPane, this);
 
         recyclerViewSteps.setAdapter(mStepRecyclerViewAdapter);
         recyclerViewSteps.setHasFixedSize(true);
@@ -80,5 +99,10 @@ public class SelectIngredientStep extends Fragment implements IngredientStepMana
     @Override
     public void showRecipeTitleView(String recipeTitle) {
         buttonIngredient.setText("ALGO " + recipeTitle);
+    }
+
+    @Override
+    public void onRecipeClicked(int item) {
+        mCallback.onRecipeClicked(item);
     }
 }

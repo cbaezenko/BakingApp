@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Step;
@@ -22,10 +21,25 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     private List <Step> stepList;
     private  Context context;
     private String recipeName;
-    public StepRecyclerViewAdapter(Context context, List<Step> stepList, String recipeName){
+    private boolean mTwoPane;
+
+    private ListenStep mListenStep;
+
+    public interface ListenStep{
+        void onRecipeClicked(int item);
+    }
+
+    public StepRecyclerViewAdapter(Context context,
+                                   List<Step> stepList,
+                                   String recipeName,
+                                   boolean twoPane,
+                                   ListenStep listenStep ){
         this.context = context;
         this.stepList = stepList;
         this.recipeName = recipeName;
+        this.mTwoPane = twoPane;
+
+        mListenStep = listenStep;
     }
 
     @NonNull
@@ -65,9 +79,14 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
             bundle.putParcelable(Constants.STEP_CONTENT, stepList.get(clickedPosition));
             bundle.putString(Constants.RECIPE_NAME, recipeName);
 
-            Intent intent = new Intent(context, StepActivity.class);
-            intent.putExtras(bundle);
-            context.startActivity(intent);
+            Intent intent;
+            if(!mTwoPane){
+                intent = new Intent(context, StepActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);}
+            else{
+                mListenStep.onRecipeClicked(clickedPosition);
+            }
         }
     }
 }

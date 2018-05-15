@@ -71,7 +71,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         assert step != null;
         fillLayout(step);
 
-        if(step!=null) {
+        if(step != null) {
             if (step.getVideoURL() != null && !step.getVideoURL().isEmpty() && !step.getVideoURL().equals("")) {
 
                 mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
@@ -133,9 +133,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     private void releasePlayer() {
+        if(mExoPlayer != null){
         mExoPlayer.stop();
         mExoPlayer.release();
-        mExoPlayer = null;
+        mExoPlayer = null;}
     }
 
     private MediaSource buildMediaSource(String uriString) {
@@ -172,23 +173,18 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
+        if(mSessionCompat!=null)
         mSessionCompat.setActive(false);
     }
 
     @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
-
-    }
+    public void onTimelineChanged(Timeline timeline, Object manifest) { }
 
     @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
-    }
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) { }
 
     @Override
-    public void onLoadingChanged(boolean isLoading) {
-
-    }
+    public void onLoadingChanged(boolean isLoading) { }
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
@@ -201,14 +197,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @Override
-    public void onPlayerError(ExoPlaybackException error) {
-
-    }
+    public void onPlayerError(ExoPlaybackException error) { }
 
     @Override
-    public void onPositionDiscontinuity() {
-
-    }
+    public void onPositionDiscontinuity() { }
 
     public class MySessionCallback extends MediaSessionCompat.Callback {
 

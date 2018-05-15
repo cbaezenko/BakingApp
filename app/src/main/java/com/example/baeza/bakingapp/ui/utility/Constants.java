@@ -12,4 +12,6 @@ public class Constants {
     public static final String RECIPE_NAME = "recipe_name";
 
     public static final String MEDIA_SESSION_TAG = "media_session_tag";
+
+    public static final String SCREEN_PANES = "screen_panes";
 }
