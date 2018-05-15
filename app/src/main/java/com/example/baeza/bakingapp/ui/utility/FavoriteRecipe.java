@@ -48,12 +48,11 @@ public class FavoriteRecipe {
 
         editor.apply();
         informWidgetToUpdate();
-
     }
 
     public  String getRecipeNameFromPref(){
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.RECIPE_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(Constants.RECIPE_NAME, "Recipel");
+        return sharedPreferences.getString(Constants.RECIPE_NAME, "Brownies");
     }
 
     private void informWidgetToUpdate(){

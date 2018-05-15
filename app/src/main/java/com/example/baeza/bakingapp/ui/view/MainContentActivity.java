@@ -11,6 +11,7 @@ import com.example.baeza.bakingapp.ui.data.Ingredient;
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.data.Step;
 import com.example.baeza.bakingapp.ui.manager.OnFragmentSelectedListener;
+import com.example.baeza.bakingapp.ui.manager.OnIngredientListener;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainContentActivity extends AppCompatActivity implements OnFragmentSelectedListener {
+public class MainContentActivity extends AppCompatActivity
+        implements OnFragmentSelectedListener, OnIngredientListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -117,5 +119,10 @@ public class MainContentActivity extends AppCompatActivity implements OnFragment
         getSupportFragmentManager().beginTransaction()
                 .replace(container, fragment)
                 .commit();
+    }
+
+    @Override
+    public void onIngredientClicked(Bundle bundle) {
+        replaceFragment(new IngredientFragment(), R.id.detail_container,bundle);
     }
 }

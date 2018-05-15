@@ -18,6 +18,7 @@ import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.data.Step;
 import com.example.baeza.bakingapp.ui.manager.IngredientStepManager;
 import com.example.baeza.bakingapp.ui.manager.OnFragmentSelectedListener;
+import com.example.baeza.bakingapp.ui.manager.OnIngredientListener;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 import com.example.baeza.bakingapp.ui.utility.StepRecyclerViewAdapter;
 
@@ -42,6 +43,7 @@ StepRecyclerViewAdapter.ListenStep{
     StepRecyclerViewAdapter mStepRecyclerViewAdapter;
     private boolean twoPane;
 
+    private OnIngredientListener mOnIngredientListener;
     private OnFragmentSelectedListener mCallback;
 
     @Override
@@ -52,6 +54,7 @@ StepRecyclerViewAdapter.ListenStep{
         //if not, it throws an exception
          try {
              mCallback = (OnFragmentSelectedListener) context;
+             mOnIngredientListener = (OnIngredientListener) context;
          }catch (ClassCastException e){
              throw new ClassCastException(context.toString()+
              "must implement OnFragmentSelectedListener");
@@ -88,12 +91,20 @@ StepRecyclerViewAdapter.ListenStep{
 
     @OnClick(R.id.button_ingredient)
     void onClick(){
-        Intent intent = new Intent(getContext(), IngredientActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
         bundle.putString(Constants.RECIPE_KEY, mRecipe.getName());
-        intent.putExtras(bundle);
-        startActivity(intent);
+        if(!twoPane){
+            Intent intent = new Intent(getContext(), IngredientActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
+//            bundle.putString(Constants.RECIPE_KEY, mRecipe.getName());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        else{
+            mOnIngredientListener.onIngredientClicked(bundle);
+        }
     }
 
     @Override
