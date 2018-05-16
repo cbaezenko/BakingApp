@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.baeza.bakingapp.R;
@@ -38,6 +39,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +54,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     TextView tvDescription;
     @BindView(R.id.tv_exo_player_no_info)
     TextView tvExoPlayerNoInfo;
+    @BindView(R.id.thumbnail)
+    ImageView mImageViewThumbnail;
 
     private static final String STEP_KEY = "STEP_KEY";
     private static final String USER_AGENT = "BakingApp";
@@ -60,6 +64,14 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private PlaybackStateCompat.Builder mStateBuilder;
     private SimpleExoPlayer mExoPlayer;
     private Step mStep;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mImageViewThumbnail.getVisibility() == View.VISIBLE) {
+            mImageViewThumbnail.setVisibility(View.GONE);
+        }
+    }
 
     public StepFragment() {
     }
@@ -70,10 +82,9 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         View rootView = inflater.inflate(layout, container, false);
         ButterKnife.bind(this, rootView);
 
-        if(savedInstanceState!=null){
+        if (savedInstanceState != null) {
             mStep = savedInstanceState.getParcelable(STEP_KEY);
-        }
-        else {
+        } else {
             if (getArguments() == null) return null;
             mStep = getArguments().getParcelable(Constants.STEP_CONTENT);
             assert mStep != null;
@@ -90,7 +101,12 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
                 } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
                     mSimpleExoPlayerView.setVisibility(View.INVISIBLE);
-                    tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+                    if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
+                        mImageViewThumbnail.setVisibility(View.VISIBLE);
+                        Picasso.with(getContext()).load(mStep.getThumbnailURL()).into(mImageViewThumbnail);
+                    } else {
+                        tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
@@ -142,10 +158,11 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     private void releasePlayer() {
-        if(mExoPlayer != null){
-        mExoPlayer.stop();
-        mExoPlayer.release();
-        mExoPlayer = null;}
+        if (mExoPlayer != null) {
+            mExoPlayer.stop();
+            mExoPlayer.release();
+            mExoPlayer = null;
+        }
     }
 
     private MediaSource buildMediaSource(String uriString) {
@@ -164,10 +181,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     private void fillLayout(Step step) {
-        if(step!=null){
-        tvShortDescription.setText(step.getShortDescription());
-        tvDescription.setText(step.getDescription());}
-        else{
+        if (step != null) {
+            tvShortDescription.setText(step.getShortDescription());
+            tvDescription.setText(step.getDescription());
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 tvDescription.setTextAppearance(android.R.style.TextAppearance_Large);
             }
@@ -181,18 +198,21 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onDestroy() {
         super.onDestroy();
         releasePlayer();
-        if(mSessionCompat!=null)
-        mSessionCompat.setActive(false);
+        if (mSessionCompat != null)
+            mSessionCompat.setActive(false);
     }
 
     @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) { }
+    public void onTimelineChanged(Timeline timeline, Object manifest) {
+    }
 
     @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) { }
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+    }
 
     @Override
-    public void onLoadingChanged(boolean isLoading) { }
+    public void onLoadingChanged(boolean isLoading) {
+    }
 
     @Override
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
@@ -205,10 +225,12 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @Override
-    public void onPlayerError(ExoPlaybackException error) { }
+    public void onPlayerError(ExoPlaybackException error) {
+    }
 
     @Override
-    public void onPositionDiscontinuity() { }
+    public void onPositionDiscontinuity() {
+    }
 
     public class MySessionCallback extends MediaSessionCompat.Callback {
 
@@ -229,7 +251,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState){
+    public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(STEP_KEY, mStep);
         super.onSaveInstanceState(outState);
     }
