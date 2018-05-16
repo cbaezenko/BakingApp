@@ -54,7 +54,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-         holder.texStep.setText(context.getString(R.string.step) +" "+ position+ " "+stepList.get(position).getShortDescription());
+         holder.texStep.setText(stepList.get(position).getShortDescription());
     }
 
     @Override
