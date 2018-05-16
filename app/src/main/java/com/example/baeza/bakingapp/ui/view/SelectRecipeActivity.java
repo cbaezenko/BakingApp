@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
@@ -26,10 +28,14 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     RecyclerView mRecyclerView;
     @BindView(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
+    @BindView(R.id.no_internet_connection)
+    FrameLayout mFrameLayoutNoInternetConnection;
 
     SelectRecipeAdapter mAdapter;
     SelectRecipePresenter mPresenter;
     RecyclerView.LayoutManager layoutManager;
+
+    private boolean hasInternetConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +56,23 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     public void onResume() {
         super.onResume();
         mPresenter = new SelectRecipePresenter(this);
-        mPresenter.getRecipesInteractor();
+        mPresenter.hasInternetConnectionInteractor(SelectRecipeActivity.this);
+
+        if (hasInternetConnection) {
+            mPresenter.getRecipesInteractor();
+        } else {
+            mFrameLayoutNoInternetConnection.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void getRecipesView(List<Recipe> recipeList) {
         populateRecyclerView(recipeList);
+    }
+
+    @Override
+    public void hasInternetConnectionView(boolean hasInternetConnection) {
+        this.hasInternetConnection = hasInternetConnection;
     }
 
     private void populateRecyclerView(List<Recipe> recipeList) {

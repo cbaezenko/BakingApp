@@ -1,5 +1,9 @@
 package com.example.baeza.bakingapp.ui.interactor;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.data.network.utilities;
 import com.example.baeza.bakingapp.ui.manager.SelectRecipeManager;
@@ -44,5 +48,18 @@ public class SelectRecipeInteractor implements SelectRecipeManager.Interactor {
     @Override
     public void getRecipesInteractor() {
         getRetrofitAnswer();
+    }
+
+    @Override
+    public void hasInternetConnectionInteractor(Context context) {
+        presenter.hasInternetConnectionView(isNetworkConnection(context));
+    }
+
+    private boolean isNetworkConnection(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }
