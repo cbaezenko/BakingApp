@@ -51,13 +51,13 @@ public class MainContentActivity extends AppCompatActivity
             mTwoPane = true;
             createBundleToFragment();
 
-            setFragment(new SelectIngredientStep(), R.id.menu_fragment, bundleToFragment);
+            setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
             setFragment(new StepFragment(), R.id.detail_container, bundleToFragment);
 
         } else {
             mTwoPane = false;
             createBundleToFragment();
-            setFragment(new SelectIngredientStep(), R.id.menu_fragment, bundleToFragment);
+            setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
 
         }
         settingToolbar();
