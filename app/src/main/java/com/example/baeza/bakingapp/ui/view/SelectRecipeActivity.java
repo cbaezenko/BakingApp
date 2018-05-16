@@ -61,18 +61,23 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState){
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if(savedInstanceState != null){
-           mRecipeList = savedInstanceState.getParcelableArrayList(INFO_TO_KEEP);
-           populateRecyclerView(mRecipeList);
+        if (savedInstanceState != null) {
+            mRecipeList = savedInstanceState.getParcelableArrayList(INFO_TO_KEEP);
+            populateRecyclerView(mRecipeList);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        if (mFrameLayoutNoInternetConnection.getVisibility() == View.VISIBLE) {
+            mFrameLayoutNoInternetConnection.setVisibility(View.GONE);
+        }
+
         mPresenter = new SelectRecipePresenter(this);
         mPresenter.hasInternetConnectionInteractor(SelectRecipeActivity.this);
 
@@ -86,7 +91,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
     @Override
     public void getRecipesView(List<Recipe> recipeList) {
-        if(recipeList != null){
+        if (recipeList != null) {
             mFrameLayoutProgressBar.setVisibility(View.GONE);
             mRecipeList = recipeList;
             populateRecyclerView(mRecipeList);
@@ -109,7 +114,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState){
+    protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(INFO_TO_KEEP, (ArrayList<? extends Parcelable>) mRecipeList);
         super.onSaveInstanceState(outState);
     }
