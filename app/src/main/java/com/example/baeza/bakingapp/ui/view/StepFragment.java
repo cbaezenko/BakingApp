@@ -54,8 +54,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     TextView tvDescription;
     @BindView(R.id.tv_exo_player_no_info)
     TextView tvExoPlayerNoInfo;
-    @BindView(R.id.thumbnail)
-    ImageView mImageViewThumbnail;
 
     private static final String STEP_KEY = "STEP_KEY";
     private static final String USER_AGENT = "BakingApp";
@@ -64,14 +62,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private PlaybackStateCompat.Builder mStateBuilder;
     private SimpleExoPlayer mExoPlayer;
     private Step mStep;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mImageViewThumbnail.getVisibility() == View.VISIBLE) {
-            mImageViewThumbnail.setVisibility(View.GONE);
-        }
-    }
 
     public StepFragment() {
     }
@@ -100,10 +90,9 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
                     initializePlayer(mStep.getVideoURL());
 
                 } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
-                    mSimpleExoPlayerView.setVisibility(View.INVISIBLE);
                     if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
-                        mImageViewThumbnail.setVisibility(View.VISIBLE);
-                        Picasso.with(getContext()).load(mStep.getThumbnailURL()).into(mImageViewThumbnail);
+                        initializeMediaSession(getContext());
+                        initializePlayer(mStep.getThumbnailURL());
                     } else {
                         tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
                     }
