@@ -113,7 +113,8 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
             mFrameLayoutProgressBar.setVisibility(View.GONE);
 
             //for testing purposes
-            mIdlingResource.setIdleState(true);
+            if(mIdlingResource!=null){
+            mIdlingResource.setIdleState(true);}
 
             mRecipeList = recipeList;
             populateRecyclerView(mRecipeList);
