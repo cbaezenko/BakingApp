@@ -4,16 +4,16 @@ import com.example.baeza.bakingapp.ui.data.Recipe;
 
 public interface IngredientStepManager {
 
-    public interface Interactor{
+    interface Interactor{
         void getSelectedRecipeInteractor(Recipe recipe);
     }
 
-    public interface View{
+    interface View{
         void showRecipeTitleView(String recipeTitle);
 
     }
 
-    public interface Presenter{
+    interface Presenter{
         void getSelectedRecipeInteractor(Recipe recipe);
         void showRecipeTitleView(String recipeTitle);
     }

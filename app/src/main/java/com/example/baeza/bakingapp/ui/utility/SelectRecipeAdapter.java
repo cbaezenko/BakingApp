@@ -40,10 +40,11 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
 
         mFavoriteRecipe = new FavoriteRecipe(context);
 
+        //images url for the recipes, Nutella Pie, Brownies, Yellow Cake, Cheesecake.
         imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-        imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-        imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
-        imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+        imageArrays.add("https://images.pexels.com/photos/45202/brownie-dessert-cake-sweet-45202.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+        imageArrays.add("https://images.pexels.com/photos/6600/food-plate-coffee-cup.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+        imageArrays.add("https://images.pexels.com/photos/557662/pexels-photo-557662.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
     }
 
     @NonNull

@@ -18,11 +18,9 @@ import com.example.baeza.bakingapp.ui.utility.IngredientAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletionService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class IngredientFragment extends Fragment {
 

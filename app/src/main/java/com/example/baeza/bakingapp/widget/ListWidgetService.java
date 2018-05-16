@@ -64,8 +64,8 @@ public class ListWidgetService extends RemoteViewsService{
                 views.setTextViewText(R.id.tv_quantity, Double.toString(mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getQuantity()));
                 views.setTextViewText(R.id.tv_measure, mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getMeasure());
 
-                Timber.d("recipe name"+new FavoriteRecipe(mContext).getRecipeNameFromPref());
-                Timber.d("recipeId"+new FavoriteRecipe(mContext).getRecipeIdFromPref());
+                Timber.d("recipe name%s", new FavoriteRecipe(mContext).getRecipeNameFromPref());
+                Timber.d("recipeId%s", new FavoriteRecipe(mContext).getRecipeIdFromPref());
 
             }else{
             views.setTextViewText(R.id.item_list, "HOLA");}

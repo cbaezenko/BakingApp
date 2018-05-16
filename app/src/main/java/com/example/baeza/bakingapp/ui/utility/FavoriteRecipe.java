@@ -52,7 +52,7 @@ public class FavoriteRecipe {
 
     public  String getRecipeNameFromPref(){
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.RECIPE_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(Constants.RECIPE_NAME, "Brownies");
+        return sharedPreferences.getString(Constants.RECIPE_NAME, context.getResources().getString(R.string.default_recipe));
     }
 
     private void informWidgetToUpdate(){

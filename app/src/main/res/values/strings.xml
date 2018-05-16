@@ -10,6 +10,8 @@
     <string name="step">Step </string>
     <string name="next_step">Next Step</string>
 
+    <string name="default_recipe">Brownies</string>
+
     <string name="no_item_selected">No item selected</string>
 
     <string name="no_video">No video Available</string>
@@ -20,4 +22,7 @@
     <string name="button_back_recipe">Button Back Recipe</string>
 
     <string name="data_error">Ups something went wrong, please restart the app</string>
+
+    <string name="icon_portion">Icon Portion</string>
+    <string name="favorite_button">Image Favorite Button</string>
 </resources>
