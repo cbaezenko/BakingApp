@@ -1,6 +1,9 @@
 package com.example.baeza.bakingapp.ui.view;
 
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import android.support.test.espresso.IdlingResource;
+
+import com.example.baeza.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.manager.SelectRecipeManager;
@@ -44,6 +50,18 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
     private boolean hasInternetConnection;
     private static final String INFO_TO_KEEP = "INFO_TO_KEEP";
+
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource(){
+        if(mIdlingResource == null){
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +111,10 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     public void getRecipesView(List<Recipe> recipeList) {
         if (recipeList != null) {
             mFrameLayoutProgressBar.setVisibility(View.GONE);
+
+            //for testing purposes
+            mIdlingResource.setIdleState(true);
+
             mRecipeList = recipeList;
             populateRecyclerView(mRecipeList);
         } else {
