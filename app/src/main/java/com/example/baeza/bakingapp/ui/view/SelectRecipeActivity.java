@@ -1,5 +1,6 @@
 package com.example.baeza.bakingapp.ui.view;
 
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
@@ -17,6 +17,7 @@ import com.example.baeza.bakingapp.ui.manager.SelectRecipeManager;
 import com.example.baeza.bakingapp.ui.presenter.SelectRecipePresenter;
 import com.example.baeza.bakingapp.ui.utility.SelectRecipeAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,11 +37,13 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     @BindView(R.id.tv_no_internet_connection)
     TextView tv_no_internet_connection;
 
+    List<Recipe> mRecipeList;
     SelectRecipeAdapter mAdapter;
     SelectRecipePresenter mPresenter;
     RecyclerView.LayoutManager layoutManager;
 
     private boolean hasInternetConnection;
+    private static final String INFO_TO_KEEP = "INFO_TO_KEEP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,16 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
             layoutManager = new GridLayoutManager(this, 3);
         } else {
             layoutManager = new LinearLayoutManager(this);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if(savedInstanceState != null){
+           mRecipeList = savedInstanceState.getParcelableArrayList(INFO_TO_KEEP);
+           populateRecyclerView(mRecipeList);
         }
     }
 
@@ -75,7 +88,8 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     public void getRecipesView(List<Recipe> recipeList) {
         if(recipeList != null){
             mFrameLayoutProgressBar.setVisibility(View.GONE);
-            populateRecyclerView(recipeList);
+            mRecipeList = recipeList;
+            populateRecyclerView(mRecipeList);
         } else {
             mFrameLayoutNoInternetConnection.setVisibility(View.VISIBLE);
             tv_no_internet_connection.setText(getResources().getString(R.string.data_error));
@@ -92,5 +106,11 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        outState.putParcelableArrayList(INFO_TO_KEEP, (ArrayList<? extends Parcelable>) mRecipeList);
+        super.onSaveInstanceState(outState);
     }
 }
