@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.baeza.bakingapp.R;
@@ -32,6 +33,8 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     FrameLayout mFrameLayoutNoInternetConnection;
     @BindView(R.id.frameProgressBar)
     FrameLayout mFrameLayoutProgressBar;
+    @BindView(R.id.tv_no_internet_connection)
+    TextView tv_no_internet_connection;
 
     SelectRecipeAdapter mAdapter;
     SelectRecipePresenter mPresenter;
@@ -70,8 +73,13 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
     @Override
     public void getRecipesView(List<Recipe> recipeList) {
-        mFrameLayoutProgressBar.setVisibility(View.GONE);
-        populateRecyclerView(recipeList);
+        if(recipeList != null){
+            mFrameLayoutProgressBar.setVisibility(View.GONE);
+            populateRecyclerView(recipeList);
+        } else {
+            mFrameLayoutNoInternetConnection.setVisibility(View.VISIBLE);
+            tv_no_internet_connection.setText(getResources().getString(R.string.data_error));
+        }
     }
 
     @Override
