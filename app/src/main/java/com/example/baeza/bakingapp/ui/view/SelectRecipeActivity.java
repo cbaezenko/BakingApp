@@ -30,6 +30,8 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.no_internet_connection)
     FrameLayout mFrameLayoutNoInternetConnection;
+    @BindView(R.id.frameProgressBar)
+    FrameLayout mFrameLayoutProgressBar;
 
     SelectRecipeAdapter mAdapter;
     SelectRecipePresenter mPresenter;
@@ -60,6 +62,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
         if (hasInternetConnection) {
             mPresenter.getRecipesInteractor();
+            mFrameLayoutProgressBar.setVisibility(View.VISIBLE);
         } else {
             mFrameLayoutNoInternetConnection.setVisibility(View.VISIBLE);
         }
@@ -67,6 +70,7 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
     @Override
     public void getRecipesView(List<Recipe> recipeList) {
+        mFrameLayoutProgressBar.setVisibility(View.GONE);
         populateRecyclerView(recipeList);
     }
 
