@@ -21,6 +21,7 @@
         </activity>
         <activity
             android:name=".ui.view.MainContentActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"
             android:launchMode="singleTop"
             android:parentActivityName=".ui.view.SelectRecipeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
@@ -30,6 +31,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".ui.view.StepActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"
             android:parentActivityName=".ui.view.MainContentActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
