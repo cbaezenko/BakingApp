@@ -61,6 +61,8 @@ public class ListWidgetService extends RemoteViewsService{
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item_ingredient);
             if(mRecipeList != null && (mRecipeList.size()>0)){
                 views.setTextViewText(R.id.item_list, mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getIngredient());
+                views.setTextViewText(R.id.tv_quantity, Double.toString(mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getQuantity()));
+                views.setTextViewText(R.id.tv_measure, mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getMeasure());
 
                 Timber.d("recipe name"+new FavoriteRecipe(mContext).getRecipeNameFromPref());
                 Timber.d("recipeId"+new FavoriteRecipe(mContext).getRecipeIdFromPref());
