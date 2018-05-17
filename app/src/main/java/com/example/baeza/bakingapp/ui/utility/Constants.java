@@ -1,6 +1,6 @@
 package com.example.baeza.bakingapp.ui.utility;
 
-public class Constants {
+public final class Constants {
 
     public static final String ID_RECIPE = "recipe_id";
 

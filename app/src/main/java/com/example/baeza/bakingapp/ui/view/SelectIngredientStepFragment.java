@@ -37,10 +37,10 @@ public class SelectIngredientStepFragment extends Fragment implements Ingredient
     Button buttonIngredient;
     @BindView(R.id.recyclerView_steps)
     RecyclerView recyclerViewSteps;
-    Recipe mRecipe;
-    List<Step> mStepList;
-    List<Ingredient> mIngredientList;
-    StepRecyclerViewAdapter mStepRecyclerViewAdapter;
+    private Recipe mRecipe;
+    private List<Step> mStepList;
+    private List<Ingredient> mIngredientList;
+    private StepRecyclerViewAdapter mStepRecyclerViewAdapter;
     private boolean twoPane;
 
     private OnIngredientListener mOnIngredientListener;

@@ -184,8 +184,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         releasePlayer();
         if (mSessionCompat != null)
             mSessionCompat.setActive(false);
