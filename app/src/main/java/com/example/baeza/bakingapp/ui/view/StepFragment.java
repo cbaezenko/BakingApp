@@ -230,7 +230,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(STEP_CONTENT, mStep);
         super.onSaveInstanceState(outState);
     }

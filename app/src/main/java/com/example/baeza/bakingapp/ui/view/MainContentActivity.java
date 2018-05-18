@@ -29,6 +29,8 @@ public class MainContentActivity extends AppCompatActivity
     private List<Step> stepList;
     private List<Ingredient> mIngredientList;
     private Bundle bundleToFragment;
+    private int recipePosition = 0;
+    private final static String POSITION = "POSITION";
 
     private boolean mTwoPane;
 
@@ -40,24 +42,29 @@ public class MainContentActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         if (savedInstanceState != null) {
-            retrieveInfoForSavedInstanceState(savedInstanceState);
+            retrieveInfoFromSavedInstanceState(savedInstanceState);
+            createBundleToFragment();
+
+            if (findViewById(R.id.layout_two_pane) != null) {
+                mTwoPane = true;
+                createBundleAndReplaceFragment(recipePosition);
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
+            } else {
+                mTwoPane = false;
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
+            }
         } else {
             retrieveInfoBundle();
-        }
-
-        //check for phone or tablet
-
-        if (findViewById(R.id.layout_two_pane) != null) {
-            mTwoPane = true;
             createBundleToFragment();
 
-            setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
-            setFragment(new StepFragment(), R.id.detail_container, bundleToFragment);
-
-        } else {
-            mTwoPane = false;
-            createBundleToFragment();
-            setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
+            if (findViewById(R.id.layout_two_pane) != null) {
+                mTwoPane = true;
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
+                setFragment(new StepFragment(), R.id.detail_container, bundleToFragment);
+            } else {
+                mTwoPane = false;
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
+            }
         }
         settingToolbar();
     }
@@ -83,10 +90,11 @@ public class MainContentActivity extends AppCompatActivity
         mIngredientList = bundle.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
     }
 
-    public void retrieveInfoForSavedInstanceState(Bundle savedInstanceState) {
+    public void retrieveInfoFromSavedInstanceState(Bundle savedInstanceState) {
         recipe = savedInstanceState.getParcelable(Constants.RECIPE_KEY);
         stepList = savedInstanceState.getParcelableArrayList(Constants.STEP_LIST_KEY);
         mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
+        recipePosition = savedInstanceState.getInt(POSITION);
     }
 
     private void setFragment(Fragment fragment, int container, Bundle bundle) {
@@ -102,11 +110,17 @@ public class MainContentActivity extends AppCompatActivity
         savedInstanceState.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
         savedInstanceState.putParcelable(Constants.RECIPE_KEY, recipe);
         savedInstanceState.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
+        savedInstanceState.putInt(POSITION, recipePosition);
         super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     public void onRecipeClicked(int recipePosition) {
+        this.recipePosition = recipePosition;
+        createBundleAndReplaceFragment(recipePosition);
+    }
+
+    private void createBundleAndReplaceFragment(int recipePosition) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.STEP_CONTENT, stepList.get(recipePosition));
         replaceFragment(new StepFragment(), R.id.detail_container, bundle);
@@ -114,7 +128,6 @@ public class MainContentActivity extends AppCompatActivity
 
     private void replaceFragment(Fragment fragment, int container, Bundle bundle) {
         fragment.setArguments(bundle);
-
         getSupportFragmentManager().beginTransaction()
                 .replace(container, fragment)
                 .commit();
@@ -122,6 +135,6 @@ public class MainContentActivity extends AppCompatActivity
 
     @Override
     public void onIngredientClicked(Bundle bundle) {
-        replaceFragment(new IngredientFragment(), R.id.detail_container,bundle);
+        replaceFragment(new IngredientFragment(), R.id.detail_container, bundle);
     }
 }
