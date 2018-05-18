@@ -13,7 +13,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.baeza.bakingapp.R;
@@ -39,7 +38,7 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
-import com.squareup.picasso.Picasso;
+import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -180,15 +179,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             tvDescription.setGravity(Gravity.CENTER);
             tvDescription.setText(getContext().getResources().getString(R.string.no_item_selected));
         }
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        releasePlayer();
-        if (mSessionCompat != null)
-            mSessionCompat.setActive(false);
     }
 
     @Override
@@ -243,5 +233,40 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(STEP_KEY, mStep);
         super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            initializePlayer(mStep.getVideoURL());
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Util.SDK_INT <= 23 || mExoPlayer == null) {
+            initializePlayer(mStep.getVideoURL());
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Util.SDK_INT <= 23) {
+            mExoPlayer.release();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+            if (mSessionCompat != null)
+                mSessionCompat.setActive(false);
+        }
     }
 }
