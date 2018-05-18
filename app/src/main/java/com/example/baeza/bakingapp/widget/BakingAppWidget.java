@@ -37,6 +37,8 @@ public class BakingAppWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
+        //I refresh the widget when the user select a new favorite recipe on
+        //FavoriteRecipe.java from lines 77 to 80
     }
 
     @Override

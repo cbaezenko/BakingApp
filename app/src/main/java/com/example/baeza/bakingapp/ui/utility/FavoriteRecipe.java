@@ -73,7 +73,7 @@ public class FavoriteRecipe {
 
                     @Override
                     public void onNext(List<Recipe> recipeList) {
-
+                        //refresh widget
                         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                         int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingAppWidget.class));
 
