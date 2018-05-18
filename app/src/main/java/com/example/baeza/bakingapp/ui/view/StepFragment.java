@@ -42,6 +42,7 @@ import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static com.example.baeza.bakingapp.ui.utility.Constants.STEP_CONTENT;
 
@@ -57,11 +58,16 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     TextView tvExoPlayerNoInfo;
 
     private static final String USER_AGENT = "BakingApp";
+    private static final String PLAYER_POSITION = "PLAYER_POSITION";
+    private static final String PLAYING_STATE = "PLAYING_STATE";
 
     private MediaSessionCompat mSessionCompat;
     private PlaybackStateCompat.Builder mStateBuilder;
     private SimpleExoPlayer mExoPlayer;
     private Step mStep;
+
+    private long playerPosition = 0L;
+    private boolean playingState;
 
     public StepFragment() {
     }
@@ -74,6 +80,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
         if (savedInstanceState != null) {
             mStep = savedInstanceState.getParcelable(STEP_CONTENT);
+            playerPosition = savedInstanceState.getLong(PLAYER_POSITION);
+            playingState = savedInstanceState.getBoolean(PLAYING_STATE);
         } else {
             if (getArguments() == null) return null;
             mStep = getArguments().getParcelable(STEP_CONTENT);
@@ -141,7 +149,17 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
             //Prepare the mediaSource
             mExoPlayer.prepare(buildMediaSource(uriString));
-            mExoPlayer.setPlayWhenReady(true);
+
+            Timber.d("Valor de position" +playerPosition);
+            Timber.d("Valor de state "+playingState);
+
+
+            if (playerPosition != 0) {
+                mExoPlayer.seekTo(playerPosition);
+                mExoPlayer.setPlayWhenReady(playingState);
+            } else {
+                mExoPlayer.setPlayWhenReady(true);
+            }
         }
     }
 
@@ -232,42 +250,42 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(STEP_CONTENT, mStep);
-        super.onSaveInstanceState(outState);
+        outState.putLong(PLAYER_POSITION, playerPosition);
+        outState.putBoolean(PLAYING_STATE, playingState);
+//        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (Util.SDK_INT > 23) {
-            if (mSessionCompat == null) {
-                initializeMediaSession(getContext());
-                if (mStep != null) {
-                    initializePlayer(mStep.getVideoURL());
-                }
-            } else {
-                mSessionCompat.setActive(true);
-            }
-        }
+//        if (Util.SDK_INT > 23) {
+//            if (mStep != null) {
+//                initializePlayer(mStep.getVideoURL());
+//            }
+//        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (Util.SDK_INT <= 23 || mExoPlayer == null) {
-            initializeMediaSession(getContext());
             if (mStep != null) {
                 initializePlayer(mStep.getVideoURL());
-            }
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT <= 23) {
+//        if (Util.SDK_INT <= 23) {
+//            releasePlayer();
+//        }
+        if (mExoPlayer != null) {
+            playerPosition = mExoPlayer.getCurrentPosition();
+            playingState = mExoPlayer.getPlayWhenReady();
             releasePlayer();
         }
     }
+
 
     @Override
     public void onStop() {
