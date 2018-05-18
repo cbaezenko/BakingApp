@@ -58,7 +58,6 @@ public class MainContentActivity extends AppCompatActivity
             mTwoPane = false;
             createBundleToFragment();
             setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
-
         }
         settingToolbar();
     }

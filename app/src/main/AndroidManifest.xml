@@ -31,7 +31,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".ui.view.StepActivity"
-            android:configChanges="orientation|screenSize|layoutDirection"
             android:parentActivityName=".ui.view.MainContentActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 

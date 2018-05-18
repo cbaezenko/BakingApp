@@ -43,6 +43,8 @@ import com.google.android.exoplayer2.util.Util;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.baeza.bakingapp.ui.utility.Constants.STEP_CONTENT;
+
 public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     @BindView(R.id.exo_player)
@@ -54,7 +56,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     @BindView(R.id.tv_exo_player_no_info)
     TextView tvExoPlayerNoInfo;
 
-    private static final String STEP_KEY = "STEP_KEY";
     private static final String USER_AGENT = "BakingApp";
 
     private MediaSessionCompat mSessionCompat;
@@ -72,10 +73,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         ButterKnife.bind(this, rootView);
 
         if (savedInstanceState != null) {
-            mStep = savedInstanceState.getParcelable(STEP_KEY);
+            mStep = savedInstanceState.getParcelable(STEP_CONTENT);
         } else {
             if (getArguments() == null) return null;
-            mStep = getArguments().getParcelable(Constants.STEP_CONTENT);
+            mStep = getArguments().getParcelable(STEP_CONTENT);
             assert mStep != null;
             fillLayout(mStep);
 
@@ -98,7 +99,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
                 }
             }
         }
-
         return rootView;
     }
 
@@ -231,16 +231,18 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(STEP_KEY, mStep);
+        outState.putParcelable(STEP_CONTENT, mStep);
         super.onSaveInstanceState(outState);
     }
-
 
     @Override
     public void onStart() {
         super.onStart();
         if (Util.SDK_INT > 23) {
-            initializePlayer(mStep.getVideoURL());
+            initializeMediaSession(getContext());
+            if (mStep != null) {
+                initializePlayer(mStep.getVideoURL());
+            }
         }
     }
 
@@ -248,7 +250,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onResume() {
         super.onResume();
         if (Util.SDK_INT <= 23 || mExoPlayer == null) {
-            initializePlayer(mStep.getVideoURL());
+            initializeMediaSession(getContext());
+            if (mStep != null) {
+                initializePlayer(mStep.getVideoURL());
+            }
         }
     }
 
@@ -256,7 +261,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onPause() {
         super.onPause();
         if (Util.SDK_INT <= 23) {
-            mExoPlayer.release();
+            releasePlayer();
         }
     }
 
@@ -265,8 +270,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         super.onStop();
         if (Util.SDK_INT > 23) {
             releasePlayer();
-            if (mSessionCompat != null)
-                mSessionCompat.setActive(false);
         }
     }
 }

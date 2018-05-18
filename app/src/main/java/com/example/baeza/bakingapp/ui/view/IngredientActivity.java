@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 
 public class IngredientActivity extends AppCompatActivity {
 
-    @BindView(R.id.container)
+    @BindView(R.id.detail_container)
     FrameLayout mFrameLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -45,7 +45,7 @@ public class IngredientActivity extends AppCompatActivity {
             IngredientFragment ingredientFragment = new IngredientFragment();
             ingredientFragment.setArguments(bundleToFragment(mIngredientList));
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, ingredientFragment)
+                    .add(R.id.detail_container, ingredientFragment)
                     .commit();
         }
 
