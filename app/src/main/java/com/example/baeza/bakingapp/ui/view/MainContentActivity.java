@@ -28,7 +28,6 @@ public class MainContentActivity extends AppCompatActivity
     private Recipe recipe;
     private List<Step> stepList;
     private List<Ingredient> mIngredientList;
-    private Bundle bundleToFragment;
     private int recipePosition = 0;
     private final static String POSITION = "POSITION";
 
@@ -41,29 +40,25 @@ public class MainContentActivity extends AppCompatActivity
 
         ButterKnife.bind(this);
 
-        if (savedInstanceState != null) {
-            retrieveInfoFromSavedInstanceState(savedInstanceState);
-            createBundleToFragment();
-
-            if (findViewById(R.id.layout_two_pane) != null) {
-                mTwoPane = true;
+        if (findViewById(R.id.layout_two_pane) != null) {
+            mTwoPane = true;
+            if (savedInstanceState != null) {
+                retrieveInfoFromSavedInstanceState(savedInstanceState);
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
                 createBundleAndReplaceFragment(recipePosition);
-                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
             } else {
-                mTwoPane = false;
-                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
+                retrieveInfoBundle();
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
+                setFragment(new StepFragment(), R.id.detail_container, createBundleToFragment());
             }
         } else {
-            retrieveInfoBundle();
-            createBundleToFragment();
-
-            if (findViewById(R.id.layout_two_pane) != null) {
-                mTwoPane = true;
-                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
-                setFragment(new StepFragment(), R.id.detail_container, bundleToFragment);
+            mTwoPane = false;
+            if (savedInstanceState != null) {
+                retrieveInfoFromSavedInstanceState(savedInstanceState);
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
             } else {
-                mTwoPane = false;
-                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, bundleToFragment);
+                retrieveInfoBundle();
+                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
             }
         }
         settingToolbar();
@@ -75,12 +70,13 @@ public class MainContentActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void createBundleToFragment() {
-        bundleToFragment = new Bundle();
+    public Bundle createBundleToFragment() {
+        Bundle bundleToFragment = new Bundle();
         bundleToFragment.putParcelable(Constants.RECIPE_KEY, recipe);
         bundleToFragment.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
         bundleToFragment.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
         bundleToFragment.putBoolean(Constants.SCREEN_PANES, mTwoPane);
+        return bundleToFragment;
     }
 
     public void retrieveInfoBundle() {

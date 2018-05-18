@@ -239,9 +239,13 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onStart() {
         super.onStart();
         if (Util.SDK_INT > 23) {
-            initializeMediaSession(getContext());
-            if (mStep != null) {
-                initializePlayer(mStep.getVideoURL());
+            if (mSessionCompat == null) {
+                initializeMediaSession(getContext());
+                if (mStep != null) {
+                    initializePlayer(mStep.getVideoURL());
+                }
+            } else {
+                mSessionCompat.setActive(true);
             }
         }
     }
