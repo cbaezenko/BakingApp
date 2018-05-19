@@ -39,6 +39,16 @@ public class StepActivity extends AppCompatActivity {
                         .add(R.id.detail_container, stepFragment)
                         .commit();
             }
+        }else {
+            mStep = saveInstanceState.getParcelable(Constants.STEP_CONTENT);
+            toolbarTitle = saveInstanceState.getString(Constants.RECIPE_NAME);
+
+            StepFragment stepFragment = new StepFragment();
+
+            stepFragment.setArguments(argumentsToFragment());
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detail_container, stepFragment)
+                    .commit();
         }
     }
 

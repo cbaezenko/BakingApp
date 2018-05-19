@@ -66,7 +66,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     private SimpleExoPlayer mExoPlayer;
     private Step mStep;
 
-    private long playerPosition = 0L;
+    private long playerPosition;
     private boolean playingState;
 
     public StepFragment() {
@@ -78,32 +78,37 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         View rootView = inflater.inflate(layout, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (savedInstanceState != null) {
+            //primera vez sin video
+            if (getArguments() == null) return null;
+            Timber.d("\nse reproduce 1");
+            mStep = getArguments().getParcelable(STEP_CONTENT);
+
+        if(savedInstanceState != null) {
+            Timber.d("\nse reproduce 2");
             mStep = savedInstanceState.getParcelable(STEP_CONTENT);
             playerPosition = savedInstanceState.getLong(PLAYER_POSITION);
             playingState = savedInstanceState.getBoolean(PLAYING_STATE);
-        } else {
-            if (getArguments() == null) return null;
-            mStep = getArguments().getParcelable(STEP_CONTENT);
-            assert mStep != null;
-            fillLayout(mStep);
+        }
 
-            if (mStep != null) {
-                if (mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
+        assert mStep != null;
+        fillLayout(mStep);
 
-                    mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
-                            R.drawable.rectangle));
+        if (mStep != null) {
+            if (mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
+                Timber.d("\ncorriendo primer if");
+                mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
+                        R.drawable.rectangle));
 
+                initializeMediaSession(getContext());
+                initializePlayer(mStep.getVideoURL());
+
+            } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
+                Timber.d("\ncorriendo segundo if");
+                if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
                     initializeMediaSession(getContext());
-                    initializePlayer(mStep.getVideoURL());
-
-                } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
-                    if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
-                        initializeMediaSession(getContext());
-                        initializePlayer(mStep.getThumbnailURL());
-                    } else {
-                        tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
-                    }
+                    initializePlayer(mStep.getThumbnailURL());
+                } else {
+                    tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -137,6 +142,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     private void initializePlayer(String uriString) {
+        Timber.d("\ninicializando player!");
         if (mExoPlayer == null) {
             //create an instance of the exoPlayer
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -150,16 +156,17 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             //Prepare the mediaSource
             mExoPlayer.prepare(buildMediaSource(uriString));
 
-            Timber.d("Valor de position" +playerPosition);
-            Timber.d("Valor de state "+playingState);
+            Timber.d("\nValor de position" +playerPosition);
+            Timber.d("\nValor de state "+playingState);
 
-
-            if (playerPosition != 0) {
-                mExoPlayer.seekTo(playerPosition);
-                mExoPlayer.setPlayWhenReady(playingState);
-            } else {
-                mExoPlayer.setPlayWhenReady(true);
-            }
+//            if(mSessionCompat!=null) {
+                if (playerPosition != 0) {
+                    mExoPlayer.seekTo(playerPosition);
+                    mExoPlayer.setPlayWhenReady(playingState);
+                } else {
+                    mExoPlayer.setPlayWhenReady(true);
+                }
+//            }
         }
     }
 
@@ -215,9 +222,12 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, mExoPlayer.getCurrentPosition(), 1f);
-        } else if (playbackState == ExoPlayer.STATE_READY) {
+        }
+
+        else if (playbackState == ExoPlayer.STATE_READY) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
+//        if(mStateBuilder != null)
         mSessionCompat.setPlaybackState(mStateBuilder.build());
     }
 
@@ -252,12 +262,15 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         outState.putParcelable(STEP_CONTENT, mStep);
         outState.putLong(PLAYER_POSITION, playerPosition);
         outState.putBoolean(PLAYING_STATE, playingState);
-//        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+      //  if(mStep!=null)
+    //     initializePlayer(mStep.getVideoURL());
 //        if (Util.SDK_INT > 23) {
 //            if (mStep != null) {
 //                initializePlayer(mStep.getVideoURL());
@@ -269,7 +282,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onResume() {
         super.onResume();
             if (mStep != null) {
-                initializePlayer(mStep.getVideoURL());
+                Timber.d("onResume!");
+//                initializePlayer(mStep.getVideoURL());
         }
     }
 
