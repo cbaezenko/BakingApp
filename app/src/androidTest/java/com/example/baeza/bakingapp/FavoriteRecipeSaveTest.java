@@ -26,15 +26,15 @@ public class FavoriteRecipeSaveTest {
 
     @Test
     public void clickFavoriteButtonInItem_saveTheRightItemInFavorites(){
-     //Scroll to position to be matched (0) with title 'Nutella Pie' and click on it to save as Favorite
+     //Scroll to position to be matched (1) with title 'Brownies' and click on it to save as Favorite
          onView(withId(R.id.recyclerView))
-     .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+     .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
          //Get the actual favorite value
         FavoriteRecipe favoriteRecipe = new FavoriteRecipe(mActivityTestRule.getActivity().getApplicationContext());
          String favoriteRecipeString = favoriteRecipe.getRecipeNameFromPref();
 
-         //check if the value in position 0, Nutella Pie, is actually save on the FavoriteRecipe.
-         onView(withText("Nutella Pie")).check(matches(withText(favoriteRecipeString)));
+         //check if the value in position 1, Brownies, is actually save on the FavoriteRecipe.
+         onView(withText("Brownies")).check(matches(withText(favoriteRecipeString)));
     }
 }
