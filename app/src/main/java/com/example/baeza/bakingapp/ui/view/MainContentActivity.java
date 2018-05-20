@@ -21,6 +21,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_POSITION;
+import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_STATE;
+
 public class MainContentActivity extends AppCompatActivity
         implements OnFragmentSelectedListener, OnIngredientListener, OnMediaCurrentPosition {
 
@@ -30,9 +33,6 @@ public class MainContentActivity extends AppCompatActivity
     private List<Step> stepList;
     private List<Ingredient> mIngredientList;
     private int recipePosition = 0;
-    private final static String POSITION = "POSITION";
-    public final static String MEDIA_CURRENT_POSITION = "MEDIA_CURRENT_POSITION";
-    public final static String MEDIA_CURRENT_STATE = "MEDIA_CURRENT_STATE";
 
     private boolean mTwoPane;
     private long mediaCurrentPosition;
@@ -100,7 +100,7 @@ public class MainContentActivity extends AppCompatActivity
         recipe = savedInstanceState.getParcelable(Constants.RECIPE_KEY);
         stepList = savedInstanceState.getParcelableArrayList(Constants.STEP_LIST_KEY);
         mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
-        recipePosition = savedInstanceState.getInt(POSITION);
+        recipePosition = savedInstanceState.getInt(Constants.RECIPE_POSITON);
     }
 
     private void setFragment(Fragment fragment, int container, Bundle bundle) {
@@ -116,7 +116,7 @@ public class MainContentActivity extends AppCompatActivity
         savedInstanceState.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
         savedInstanceState.putParcelable(Constants.RECIPE_KEY, recipe);
         savedInstanceState.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
-        savedInstanceState.putInt(POSITION, recipePosition);
+        savedInstanceState.putInt(Constants.RECIPE_POSITON, recipePosition);
         savedInstanceState.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
         savedInstanceState.putBoolean(MEDIA_CURRENT_STATE, mediaCurrentState);
         super.onSaveInstanceState(savedInstanceState);

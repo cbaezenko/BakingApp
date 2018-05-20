@@ -45,6 +45,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
+import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_POSITION;
+import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_STATE;
 import static com.example.baeza.bakingapp.ui.utility.Constants.STEP_CONTENT;
 
 public class StepFragment extends Fragment implements ExoPlayer.EventListener {
@@ -79,38 +81,34 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         View rootView = inflater.inflate(layout, container, false);
         ButterKnife.bind(this, rootView);
 
-            if (getArguments() == null){ return null;}
-            else {
-                mStep = getArguments().getParcelable(STEP_CONTENT);
-                playerPosition = getArguments().getLong(MainContentActivity.MEDIA_CURRENT_POSITION);
-                playingState = getArguments().getBoolean(MainContentActivity.MEDIA_CURRENT_STATE);
-                assert mStep != null;
-                fillLayout(mStep);
+        if (getArguments() == null) {
+            return null;
+        } else {
+            mStep = getArguments().getParcelable(STEP_CONTENT);
+            playerPosition = getArguments().getLong(MEDIA_CURRENT_POSITION);
+            playingState = getArguments().getBoolean(MEDIA_CURRENT_STATE);
+            assert mStep != null;
+            fillLayout(mStep);
 
-                if (mStep != null) {
+            if (mStep != null) {
 
-                    Timber.d("\nonCreate position media" + playerPosition
-                            +"mStep"+mStep.getDescription());
+                if (mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
+                    mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
+                            R.drawable.rectangle));
 
-                    if (mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
-                        Timber.d("\ncorriendo primer if");
-                        mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
-                                R.drawable.rectangle));
+                    initializeMediaSession(getContext());
+                    initializePlayer(mStep.getVideoURL());
 
+                } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
+                    if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
                         initializeMediaSession(getContext());
-                        initializePlayer(mStep.getVideoURL());
-
-                    } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
-                        Timber.d("\ncorriendo segundo if");
-                        if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
-                            initializeMediaSession(getContext());
-                            initializePlayer(mStep.getThumbnailURL());
-                        } else {
-                            tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
-                        }
+                        initializePlayer(mStep.getThumbnailURL());
+                    } else {
+                        tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
                     }
                 }
             }
+        }
         return rootView;
     }
 
@@ -141,7 +139,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     private void initializePlayer(String uriString) {
-        Timber.d("\ninicializando player!");
         if (mExoPlayer == null) {
             //create an instance of the exoPlayer
             TrackSelector trackSelector = new DefaultTrackSelector();
@@ -155,17 +152,12 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             //Prepare the mediaSource
             mExoPlayer.prepare(buildMediaSource(uriString));
 
-            Timber.d("\nValor de position" +playerPosition);
-            Timber.d("\nValor de state "+playingState);
-
-//            if(mSessionCompat!=null) {
-                if (playerPosition != 0) {
-                    mExoPlayer.seekTo(playerPosition);
-                    mExoPlayer.setPlayWhenReady(playingState);
-                } else {
-                    mExoPlayer.setPlayWhenReady(true);
-                }
-//            }
+            if (playerPosition != 0) {
+                mExoPlayer.seekTo(playerPosition);
+                mExoPlayer.setPlayWhenReady(playingState);
+            } else {
+                mExoPlayer.setPlayWhenReady(true);
+            }
         }
     }
 
@@ -221,9 +213,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
         if ((playbackState == ExoPlayer.STATE_READY) && playWhenReady) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, mExoPlayer.getCurrentPosition(), 1f);
-        }
-
-        else if (playbackState == ExoPlayer.STATE_READY) {
+        } else if (playbackState == ExoPlayer.STATE_READY) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
         mSessionCompat.setPlaybackState(mStateBuilder.build());
@@ -269,7 +259,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onPause() {
         super.onPause();
         if (mExoPlayer != null) {
-            Timber.d("\n valor position onPause "+mExoPlayer.getCurrentPosition());
             playerPosition = mExoPlayer.getCurrentPosition();
             onMediaCurrentPosition.currentPosition(playerPosition);
             onMediaCurrentPosition.currentMediaState(mExoPlayer.getPlayWhenReady());
@@ -283,21 +272,20 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
-        if(mExoPlayer != null) {
-//            playingState = mExoPlayer.getPlayWhenReady();
+        if (mExoPlayer != null) {
             releasePlayer();
         }
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
 
-        try{
-            onMediaCurrentPosition = (OnMediaCurrentPosition)context;
+        try {
+            onMediaCurrentPosition = (OnMediaCurrentPosition) context;
 
-        }catch (ClassCastException e){
-            throw new ClassCastException(context.toString()+
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
                     "must implement OnFragmentSelectedListener");
         }
     }
