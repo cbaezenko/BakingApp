@@ -241,11 +241,15 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             if (!mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
                 initializePlayer(mStep.getVideoURL());
             }
-
+            if(mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")){
+                tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+            }
             if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
+                tvExoPlayerNoInfo.setVisibility(View.INVISIBLE);
                 initializePlayer(mStep.getThumbnailURL());
             }
-        } else {
+        }
+        else {
             tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
         }
     }
