@@ -15,8 +15,8 @@ public final class Constants {
 
     public static final String SCREEN_PANES = "screen_panes";
 
-    public static final String RECIPE_POSITON = "RECIPE_POSITION";
+    public static final String RECIPE_POSITION = "recipe_position";
 
-    public final static String MEDIA_CURRENT_POSITION = "MEDIA_CURRENT_POSITION";
-    public final static String MEDIA_CURRENT_STATE = "MEDIA_CURRENT_STATE";
+    public final static String MEDIA_CURRENT_POSITION = "media_current_position";
+    public final static String MEDIA_CURRENT_STATE = "media_current_state";
 }

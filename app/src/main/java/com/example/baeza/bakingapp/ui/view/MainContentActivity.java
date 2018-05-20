@@ -50,7 +50,7 @@ public class MainContentActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 retrieveInfoFromSavedInstanceState(savedInstanceState);
                 setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
-                createBundleAndReplaceFragment(recipePosition);
+                createBundleAndReplaceFragmentNoClick(recipePosition);
             } else {
                 retrieveInfoBundle();
                 setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
@@ -100,7 +100,7 @@ public class MainContentActivity extends AppCompatActivity
         recipe = savedInstanceState.getParcelable(Constants.RECIPE_KEY);
         stepList = savedInstanceState.getParcelableArrayList(Constants.STEP_LIST_KEY);
         mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
-        recipePosition = savedInstanceState.getInt(Constants.RECIPE_POSITON);
+        recipePosition = savedInstanceState.getInt(Constants.RECIPE_POSITION);
     }
 
     private void setFragment(Fragment fragment, int container, Bundle bundle) {
@@ -116,7 +116,7 @@ public class MainContentActivity extends AppCompatActivity
         savedInstanceState.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
         savedInstanceState.putParcelable(Constants.RECIPE_KEY, recipe);
         savedInstanceState.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
-        savedInstanceState.putInt(Constants.RECIPE_POSITON, recipePosition);
+        savedInstanceState.putInt(Constants.RECIPE_POSITION, recipePosition);
         savedInstanceState.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
         savedInstanceState.putBoolean(MEDIA_CURRENT_STATE, mediaCurrentState);
         super.onSaveInstanceState(savedInstanceState);
@@ -128,11 +128,18 @@ public class MainContentActivity extends AppCompatActivity
         createBundleAndReplaceFragment(recipePosition);
     }
 
-    private void createBundleAndReplaceFragment(int recipePosition) {
+    private void createBundleAndReplaceFragmentNoClick(int recipePosition) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.STEP_CONTENT, stepList.get(recipePosition));
         bundle.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
         bundle.putBoolean(MEDIA_CURRENT_STATE, mediaCurrentState);
+        replaceFragment(new StepFragment(), R.id.detail_container, bundle);
+    }
+
+
+    private void createBundleAndReplaceFragment(int recipePosition) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.STEP_CONTENT, stepList.get(recipePosition));
         replaceFragment(new StepFragment(), R.id.detail_container, bundle);
     }
 

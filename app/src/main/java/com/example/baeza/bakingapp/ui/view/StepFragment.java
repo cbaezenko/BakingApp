@@ -43,7 +43,6 @@ import com.google.android.exoplayer2.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_POSITION;
 import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_STATE;
@@ -90,24 +89,9 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             assert mStep != null;
             fillLayout(mStep);
 
-            if (mStep != null) {
-
-                if (mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
-                    mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
-                            R.drawable.rectangle));
-
-                    initializeMediaSession(getContext());
-                    initializePlayer(mStep.getVideoURL());
-
-                } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
-                    if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
-                        initializeMediaSession(getContext());
-                        initializePlayer(mStep.getThumbnailURL());
-                    } else {
-                        tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
+            mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
+                    R.drawable.rectangle));
+            initializeMediaSession(getContext());
         }
         return rootView;
     }
@@ -253,6 +237,17 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     @Override
     public void onResume() {
         super.onResume();
+        if (mStep != null) {
+            if (!mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
+                initializePlayer(mStep.getVideoURL());
+            }
+
+            if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
+                initializePlayer(mStep.getThumbnailURL());
+            }
+        } else {
+            tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -275,6 +270,12 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         if (mExoPlayer != null) {
             releasePlayer();
         }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mSessionCompat.setActive(false);
     }
 
     @Override
