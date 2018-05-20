@@ -32,9 +32,11 @@ public class MainContentActivity extends AppCompatActivity
     private int recipePosition = 0;
     private final static String POSITION = "POSITION";
     public final static String MEDIA_CURRENT_POSITION = "MEDIA_CURRENT_POSITION";
+    public final static String MEDIA_CURRENT_STATE = "MEDIA_CURRENT_STATE";
 
     private boolean mTwoPane;
     private long mediaCurrentPosition;
+    private boolean mediaCurrentState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class MainContentActivity extends AppCompatActivity
     public Bundle createBundleToFragment() {
         Bundle bundleToFragment = new Bundle();
         bundleToFragment.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
+        bundleToFragment.putBoolean(MEDIA_CURRENT_STATE, mediaCurrentState);
 
         bundleToFragment.putParcelable(Constants.RECIPE_KEY, recipe);
         bundleToFragment.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
@@ -93,6 +96,7 @@ public class MainContentActivity extends AppCompatActivity
 
     public void retrieveInfoFromSavedInstanceState(Bundle savedInstanceState) {
         mediaCurrentPosition = savedInstanceState.getLong(MEDIA_CURRENT_POSITION);
+        mediaCurrentState = savedInstanceState.getBoolean(MEDIA_CURRENT_STATE);
         recipe = savedInstanceState.getParcelable(Constants.RECIPE_KEY);
         stepList = savedInstanceState.getParcelableArrayList(Constants.STEP_LIST_KEY);
         mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
@@ -114,6 +118,7 @@ public class MainContentActivity extends AppCompatActivity
         savedInstanceState.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
         savedInstanceState.putInt(POSITION, recipePosition);
         savedInstanceState.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
+        savedInstanceState.putBoolean(MEDIA_CURRENT_STATE, mediaCurrentState);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -127,6 +132,7 @@ public class MainContentActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.STEP_CONTENT, stepList.get(recipePosition));
         bundle.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
+        bundle.putBoolean(MEDIA_CURRENT_STATE, mediaCurrentState);
         replaceFragment(new StepFragment(), R.id.detail_container, bundle);
     }
 
@@ -144,6 +150,11 @@ public class MainContentActivity extends AppCompatActivity
 
     @Override
     public void currentPosition(long currentPosition) {
-        mediaCurrentPosition = currentPosition;
+        this.mediaCurrentPosition = currentPosition;
+    }
+
+    @Override
+    public void currentMediaState(boolean mediaState) {
+        this.mediaCurrentState = mediaState;
     }
 }

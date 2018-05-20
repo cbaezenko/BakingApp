@@ -83,7 +83,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             else {
                 mStep = getArguments().getParcelable(STEP_CONTENT);
                 playerPosition = getArguments().getLong(MainContentActivity.MEDIA_CURRENT_POSITION);
-
+                playingState = getArguments().getBoolean(MainContentActivity.MEDIA_CURRENT_STATE);
                 assert mStep != null;
                 fillLayout(mStep);
 
@@ -272,6 +272,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             Timber.d("\n valor position onPause "+mExoPlayer.getCurrentPosition());
             playerPosition = mExoPlayer.getCurrentPosition();
             onMediaCurrentPosition.currentPosition(playerPosition);
+            onMediaCurrentPosition.currentMediaState(mExoPlayer.getPlayWhenReady());
         }
     }
 
@@ -283,7 +284,7 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             releasePlayer();
         }
         if(mExoPlayer != null) {
-            playingState = mExoPlayer.getPlayWhenReady();
+//            playingState = mExoPlayer.getPlayWhenReady();
             releasePlayer();
         }
     }
