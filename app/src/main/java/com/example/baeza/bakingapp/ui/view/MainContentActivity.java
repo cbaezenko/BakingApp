@@ -12,6 +12,7 @@ import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.data.Step;
 import com.example.baeza.bakingapp.ui.manager.OnFragmentSelectedListener;
 import com.example.baeza.bakingapp.ui.manager.OnIngredientListener;
+import com.example.baeza.bakingapp.ui.manager.OnMediaCurrentPosition;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainContentActivity extends AppCompatActivity
-        implements OnFragmentSelectedListener, OnIngredientListener {
+        implements OnFragmentSelectedListener, OnIngredientListener, OnMediaCurrentPosition {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -30,8 +31,10 @@ public class MainContentActivity extends AppCompatActivity
     private List<Ingredient> mIngredientList;
     private int recipePosition = 0;
     private final static String POSITION = "POSITION";
+    public final static String MEDIA_CURRENT_POSITION = "MEDIA_CURRENT_POSITION";
 
     private boolean mTwoPane;
+    private long mediaCurrentPosition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class MainContentActivity extends AppCompatActivity
 
     public Bundle createBundleToFragment() {
         Bundle bundleToFragment = new Bundle();
+        bundleToFragment.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
+
         bundleToFragment.putParcelable(Constants.RECIPE_KEY, recipe);
         bundleToFragment.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
         bundleToFragment.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
@@ -87,6 +92,7 @@ public class MainContentActivity extends AppCompatActivity
     }
 
     public void retrieveInfoFromSavedInstanceState(Bundle savedInstanceState) {
+        mediaCurrentPosition = savedInstanceState.getLong(MEDIA_CURRENT_POSITION);
         recipe = savedInstanceState.getParcelable(Constants.RECIPE_KEY);
         stepList = savedInstanceState.getParcelableArrayList(Constants.STEP_LIST_KEY);
         mIngredientList = savedInstanceState.getParcelableArrayList(Constants.INGREDIENT_LIST_KEY);
@@ -107,6 +113,7 @@ public class MainContentActivity extends AppCompatActivity
         savedInstanceState.putParcelable(Constants.RECIPE_KEY, recipe);
         savedInstanceState.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
         savedInstanceState.putInt(POSITION, recipePosition);
+        savedInstanceState.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -119,6 +126,7 @@ public class MainContentActivity extends AppCompatActivity
     private void createBundleAndReplaceFragment(int recipePosition) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constants.STEP_CONTENT, stepList.get(recipePosition));
+        bundle.putLong(MEDIA_CURRENT_POSITION, mediaCurrentPosition);
         replaceFragment(new StepFragment(), R.id.detail_container, bundle);
     }
 
@@ -132,5 +140,10 @@ public class MainContentActivity extends AppCompatActivity
     @Override
     public void onIngredientClicked(Bundle bundle) {
         replaceFragment(new IngredientFragment(), R.id.detail_container, bundle);
+    }
+
+    @Override
+    public void currentPosition(long currentPosition) {
+        mediaCurrentPosition = currentPosition;
     }
 }

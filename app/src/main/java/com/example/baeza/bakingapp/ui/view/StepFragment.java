@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Step;
+import com.example.baeza.bakingapp.ui.manager.OnMediaCurrentPosition;
 import com.example.baeza.bakingapp.ui.utility.Constants;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -58,8 +59,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     TextView tvExoPlayerNoInfo;
 
     private static final String USER_AGENT = "BakingApp";
-    private static final String PLAYER_POSITION = "PLAYER_POSITION";
-    private static final String PLAYING_STATE = "PLAYING_STATE";
 
     private MediaSessionCompat mSessionCompat;
     private PlaybackStateCompat.Builder mStateBuilder;
@@ -68,6 +67,8 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
 
     private long playerPosition;
     private boolean playingState;
+
+    private OnMediaCurrentPosition onMediaCurrentPosition;
 
     public StepFragment() {
     }
@@ -78,40 +79,38 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         View rootView = inflater.inflate(layout, container, false);
         ButterKnife.bind(this, rootView);
 
-            //primera vez sin video
-            if (getArguments() == null) return null;
-            Timber.d("\nse reproduce 1");
-            mStep = getArguments().getParcelable(STEP_CONTENT);
+            if (getArguments() == null){ return null;}
+            else {
+                mStep = getArguments().getParcelable(STEP_CONTENT);
+                playerPosition = getArguments().getLong(MainContentActivity.MEDIA_CURRENT_POSITION);
 
-        if(savedInstanceState != null) {
-            Timber.d("\nse reproduce 2");
-            mStep = savedInstanceState.getParcelable(STEP_CONTENT);
-            playerPosition = savedInstanceState.getLong(PLAYER_POSITION);
-            playingState = savedInstanceState.getBoolean(PLAYING_STATE);
-        }
+                assert mStep != null;
+                fillLayout(mStep);
 
-        assert mStep != null;
-        fillLayout(mStep);
+                if (mStep != null) {
 
-        if (mStep != null) {
-            if (mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
-                Timber.d("\ncorriendo primer if");
-                mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
-                        R.drawable.rectangle));
+                    Timber.d("\nonCreate position media" + playerPosition
+                            +"mStep"+mStep.getDescription());
 
-                initializeMediaSession(getContext());
-                initializePlayer(mStep.getVideoURL());
+                    if (mStep.getVideoURL() != null && !mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
+                        Timber.d("\ncorriendo primer if");
+                        mSimpleExoPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),
+                                R.drawable.rectangle));
 
-            } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
-                Timber.d("\ncorriendo segundo if");
-                if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
-                    initializeMediaSession(getContext());
-                    initializePlayer(mStep.getThumbnailURL());
-                } else {
-                    tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+                        initializeMediaSession(getContext());
+                        initializePlayer(mStep.getVideoURL());
+
+                    } else if (mStep.getVideoURL() == null || mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
+                        Timber.d("\ncorriendo segundo if");
+                        if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
+                            initializeMediaSession(getContext());
+                            initializePlayer(mStep.getThumbnailURL());
+                        } else {
+                            tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
             }
-        }
         return rootView;
     }
 
@@ -227,7 +226,6 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         else if (playbackState == ExoPlayer.STATE_READY) {
             mStateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, mExoPlayer.getCurrentPosition(), 1f);
         }
-//        if(mStateBuilder != null)
         mSessionCompat.setPlaybackState(mStateBuilder.build());
     }
 
@@ -258,45 +256,22 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(STEP_CONTENT, mStep);
-        outState.putLong(PLAYER_POSITION, playerPosition);
-        outState.putBoolean(PLAYING_STATE, playingState);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
-
-      //  if(mStep!=null)
-    //     initializePlayer(mStep.getVideoURL());
-//        if (Util.SDK_INT > 23) {
-//            if (mStep != null) {
-//                initializePlayer(mStep.getVideoURL());
-//            }
-//        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-            if (mStep != null) {
-                Timber.d("onResume!");
-//                initializePlayer(mStep.getVideoURL());
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        if (Util.SDK_INT <= 23) {
-//            releasePlayer();
-//        }
         if (mExoPlayer != null) {
+            Timber.d("\n valor position onPause "+mExoPlayer.getCurrentPosition());
             playerPosition = mExoPlayer.getCurrentPosition();
-            playingState = mExoPlayer.getPlayWhenReady();
-            releasePlayer();
+            onMediaCurrentPosition.currentPosition(playerPosition);
         }
     }
 
@@ -306,6 +281,23 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
         super.onStop();
         if (Util.SDK_INT > 23) {
             releasePlayer();
+        }
+        if(mExoPlayer != null) {
+            playingState = mExoPlayer.getPlayWhenReady();
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        try{
+            onMediaCurrentPosition = (OnMediaCurrentPosition)context;
+
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+
+                    "must implement OnFragmentSelectedListener");
         }
     }
 }
