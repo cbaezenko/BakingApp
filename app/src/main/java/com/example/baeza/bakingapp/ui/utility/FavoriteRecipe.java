@@ -44,7 +44,7 @@ public class FavoriteRecipe {
     public  void saveRecipeNameToPref(String name){
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.RECIPE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.RECIPE_NAME, name);
+        editor.putString(Constants.RECIPE_NAME, name.trim());
 
         editor.apply();
         informWidgetToUpdate();
