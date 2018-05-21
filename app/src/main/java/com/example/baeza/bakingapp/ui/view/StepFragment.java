@@ -241,15 +241,14 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             if (!mStep.getVideoURL().isEmpty() && !mStep.getVideoURL().equals("")) {
                 initializePlayer(mStep.getVideoURL());
             }
-            if(mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")){
+            if (mStep.getVideoURL().isEmpty() || mStep.getVideoURL().equals("")) {
                 tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
             }
             if (!mStep.getThumbnailURL().isEmpty() && !mStep.getThumbnailURL().equals("")) {
                 tvExoPlayerNoInfo.setVisibility(View.INVISIBLE);
                 initializePlayer(mStep.getThumbnailURL());
             }
-        }
-        else {
+        } else {
             tvExoPlayerNoInfo.setVisibility(View.VISIBLE);
         }
     }
@@ -262,6 +261,10 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
             onMediaCurrentPosition.currentPosition(playerPosition);
             onMediaCurrentPosition.currentMediaState(mExoPlayer.getPlayWhenReady());
         }
+
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
     }
 
 
@@ -269,15 +272,14 @@ public class StepFragment extends Fragment implements ExoPlayer.EventListener {
     public void onStop() {
         super.onStop();
         if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
-        if (mExoPlayer != null) {
-            releasePlayer();
+            if (mExoPlayer != null) {
+                releasePlayer();
+            }
         }
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         mSessionCompat.setActive(false);
     }
