@@ -2,6 +2,7 @@ package com.example.baeza.bakingapp;
 
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -47,6 +48,7 @@ public class CheckRecipeSelectedTest {
     * */
     @Test
     public void clickFavoriteButtonInItem_saveTheRightItemInFavorites() {
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.scrollToPosition(0));
         onView(withRecyclerView(R.id.recyclerView).atPositionOnView(0, R.id.button_ingredient)).perform(click());
         onView(withId(R.id.button_ingredient)).check(matches(withText("Ingredients Nutella Pie")));
     }

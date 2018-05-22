@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.Visibility.GONE;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
@@ -36,8 +37,8 @@ public class GetRecipeListTest {
 
     @Test
     public void checkRecipeObject(){
-        //if the data request works as expected then progressBar is GONE.
-        onView(withId(R.id.progressBar)).check(matches(withEffectiveVisibility(GONE)));
+        //if the data request works as expected then progressBar is not VISIBLE.
+        onView(withId(R.id.progressBar)).check(matches(isDisplayed()));
     }
 
     @After
