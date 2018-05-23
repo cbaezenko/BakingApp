@@ -100,9 +100,9 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
         mPresenter.hasInternetConnectionInteractor(SelectRecipeActivity.this);
 
         if (hasInternetConnection) {
-            if (mIdlingResource != null) {
-                mIdlingResource.setIdleState(false);
-            }
+//            if (mIdlingResource != null) {
+//                mIdlingResource.setIdleState(false);
+//            }
             mPresenter.getRecipesInteractor();
             mFrameLayoutProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -132,6 +132,12 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     @Override
     public void hasInternetConnectionView(boolean hasInternetConnection) {
         this.hasInternetConnection = hasInternetConnection;
+
+        if(hasInternetConnection){
+            if (mIdlingResource != null) {
+                mIdlingResource.setIdleState(false);
+            }
+        }
     }
 
     private void populateRecyclerView(List<Recipe> recipeList) {
@@ -139,8 +145,6 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-
-
     }
 
     @Override
@@ -148,8 +152,4 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
         outState.putParcelableArrayList(INFO_TO_KEEP, (ArrayList<? extends Parcelable>) mRecipeList);
         super.onSaveInstanceState(outState);
     }
-
-//    interface DelayerCallback{
-//        void onDone(String text);
-//    }
 }

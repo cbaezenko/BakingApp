@@ -1,6 +1,7 @@
 package com.example.baeza.bakingapp;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -36,7 +37,7 @@ public class CheckRecipeSelectedTest {
     @Before
     public void registerIdlingResource() {
         mIdlingResource = mActivityTestRule.getActivity().getIdlingResource();
-        Espresso.registerIdlingResources(mIdlingResource);
+        IdlingRegistry.getInstance().register(mIdlingResource);
     }
 
     /*
@@ -63,7 +64,7 @@ public class CheckRecipeSelectedTest {
     @After
     public void unregisterIdlingResource() {
         if (mIdlingResource != null) {
-            Espresso.unregisterIdlingResources(mIdlingResource);
+            IdlingRegistry.getInstance().unregister(mIdlingResource);
         }
     }
 }
