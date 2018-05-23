@@ -54,8 +54,8 @@ public class ListWidgetService extends RemoteViewsService{
         @Override
         public int getCount() {
             if(mRecipeList.size()==0)return 0;
-            if(mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().size()!=0)
-                return mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().size();
+            if(mRecipeList.get((new FavoriteRecipe(mContext).getRecipeIdFromPref())-1).getIngredients().size()!=0)
+                return mRecipeList.get((new FavoriteRecipe(mContext).getRecipeIdFromPref())-1).getIngredients().size();
             return 0;
         }
 
@@ -63,9 +63,9 @@ public class ListWidgetService extends RemoteViewsService{
         public RemoteViews getViewAt(int i) {
             RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_item_ingredient);
             if(mRecipeList != null && (mRecipeList.size()>0)){
-                views.setTextViewText(R.id.item_list, mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getIngredient());
-                views.setTextViewText(R.id.tv_quantity, Double.toString(mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getQuantity()));
-                views.setTextViewText(R.id.tv_measure, mRecipeList.get(new FavoriteRecipe(mContext).getRecipeIdFromPref()).getIngredients().get(i).getMeasure());
+                views.setTextViewText(R.id.item_list, mRecipeList.get((new FavoriteRecipe(mContext).getRecipeIdFromPref())-1).getIngredients().get(i).getIngredient());
+                views.setTextViewText(R.id.tv_quantity, Double.toString(mRecipeList.get((new FavoriteRecipe(mContext).getRecipeIdFromPref())-1).getIngredients().get(i).getQuantity()));
+                views.setTextViewText(R.id.tv_measure, mRecipeList.get((new FavoriteRecipe(mContext).getRecipeIdFromPref())-1).getIngredients().get(i).getMeasure());
 
                 Timber.d("recipe name%s", new FavoriteRecipe(mContext).getRecipeNameFromPref());
                 Timber.d("recipeId%s", new FavoriteRecipe(mContext).getRecipeIdFromPref());

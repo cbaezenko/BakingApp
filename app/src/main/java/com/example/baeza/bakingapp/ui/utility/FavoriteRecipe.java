@@ -78,7 +78,6 @@ public class FavoriteRecipe {
                         int [] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, BakingAppWidget.class));
 
                         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.appwidget_list);
-
                     }
                 });
     }

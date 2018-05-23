@@ -2,6 +2,8 @@ package com.example.baeza.bakingapp.ui.view;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,10 +27,13 @@ import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_POS
 import static com.example.baeza.bakingapp.ui.utility.Constants.MEDIA_CURRENT_STATE;
 
 public class MainContentActivity extends AppCompatActivity
-        implements OnFragmentSelectedListener, OnIngredientListener, OnMediaCurrentPosition {
+        implements OnFragmentSelectedListener, OnIngredientListener, OnMediaCurrentPosition, SelectIngredientStepFragment.OnFavoriteSignal{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.coordinator)
+    CoordinatorLayout mCoordinatorLayout;
+
     private Recipe recipe;
     private List<Step> stepList;
     private List<Ingredient> mIngredientList;
@@ -178,5 +183,16 @@ public class MainContentActivity extends AppCompatActivity
     @Override
     public void currentMediaState(boolean mediaState) {
         this.mediaCurrentState = mediaState;
+    }
+
+    private void showSnack(String text){
+        Snackbar snackbar = Snackbar
+                .make(mCoordinatorLayout, text, Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    @Override
+    public void showSignal(String text) {
+        showSnack(text);
     }
 }

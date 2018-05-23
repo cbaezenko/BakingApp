@@ -30,7 +30,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
     private List<Recipe> recipeList;
     private Context context;
     private ArrayList<String> imageArrays = new ArrayList<>();
-    private FavoriteRecipe mFavoriteRecipe;
+//    private FavoriteRecipe mFavoriteRecipe;
     private CoordinatorLayout mCoordinatorLayout;
 
     public SelectRecipeAdapter(Context context, List<Recipe> recipeList, CoordinatorLayout coordinatorLayout) {
@@ -38,7 +38,7 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         this.context = context;
         this.mCoordinatorLayout = coordinatorLayout;
 
-        mFavoriteRecipe = new FavoriteRecipe(context);
+//        mFavoriteRecipe = new FavoriteRecipe(context);
 
         //images url for the recipes, Nutella Pie, Brownies, Yellow Cake, Cheesecake.
         imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
@@ -64,11 +64,11 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         holder.cardImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         holder.tvPortion.setText(String.format("%d", recipeList.get(position).getServings()));
 
-        if ((mFavoriteRecipe.getRecipeIdFromPref()+1) == recipeList.get(position).getId()) {
-            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_yellow_24dp));
-        } else if ((mFavoriteRecipe.getRecipeIdFromPref() +1) != recipeList.get(position).getId()) {
-            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp));
-        }
+//        if ((mFavoriteRecipe.getRecipeIdFromPref()+1) == recipeList.get(position).getId()) {
+//            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_yellow_24dp));
+//        } else if ((mFavoriteRecipe.getRecipeIdFromPref() +1) != recipeList.get(position).getId()) {
+//            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp));
+//        }
 
         Picasso.with(context)
                 .load(imageArrays.get(position))
@@ -97,21 +97,22 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
             cardTitle = itemView.findViewById(R.id.card_title);
             buttonShow = itemView.findViewById(R.id.button_ingredient);
             tvPortion = itemView.findViewById(R.id.tv_portion);
-            imageButton_favorite = itemView.findViewById(R.id.imageButton_favorite);
-
-            imageButton_favorite.setOnClickListener(this);
-            buttonShow.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+//            imageButton_favorite = itemView.findViewById(R.id.imageButton_favorite);
+//
+//            imageButton_favorite.setOnClickListener(this);
+//            buttonShow.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
 
-            if (view.getId() == R.id.imageButton_favorite) {
-                mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition());
-                mFavoriteRecipe.saveRecipeNameToPref(recipeList.get(getAdapterPosition()).getName());
-                showSnack();
-                notifyDataSetChanged();
-            } else {
+//            if (view.getId() == R.id.imageButton_favorite) {
+//                mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition());
+//                mFavoriteRecipe.saveRecipeNameToPref(recipeList.get(getAdapterPosition()).getName());
+//                showSnack();
+//                notifyDataSetChanged();
+//            } else {
 
                 int clickedPosition = getAdapterPosition();
 
@@ -123,13 +124,13 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
                 Intent intent = new Intent(context, MainContentActivity.class);
                 intent.putExtra(Constants.RECIPE_KEY, bundle);
                 context.startActivity(intent);
-            }
+//            }
         }
     }
 
-    private void showSnack(){
-        Snackbar snackbar = Snackbar
-                .make(mCoordinatorLayout, context.getString(R.string.saved_to_widget), Snackbar.LENGTH_LONG);
-        snackbar.show();
-    }
+//    private void showSnack(){
+//        Snackbar snackbar = Snackbar
+//                .make(mCoordinatorLayout, context.getString(R.string.saved_to_widget), Snackbar.LENGTH_LONG);
+//        snackbar.show();
+//    }
 }
