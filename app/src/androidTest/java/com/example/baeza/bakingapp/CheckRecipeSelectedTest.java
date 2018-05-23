@@ -9,6 +9,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 
+import com.example.baeza.bakingapp.ui.utility.FavoriteRecipe;
 import com.example.baeza.bakingapp.ui.view.SelectRecipeActivity;
 
 import org.junit.After;
@@ -47,8 +48,23 @@ public class CheckRecipeSelectedTest {
     * */
 
     @Test
-    public void clickFavoriteButtonInItem_saveTheRightItemInFavorites() {
+    public void checkRecyclerViewIsDisplayed(){
         onView(withId(R.id.recyclerView)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void clickOnRecipe_checkCorrectRecipeIsShown() {
+//        FavoriteRecipe favoriteRecipe = new FavoriteRecipe(mActivityTestRule.getActivity().getApplicationContext());
+//        int favoritePosition = favoriteRecipe.getRecipeIdFromPref();
+//        if(favoritePosition > 3){
+//            favoritePosition = 0;
+//        }
+
+        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+//        onView(withId(R.id.switch_favorite)).perform(click());
+        onView(withId(R.id.button_ingredient)).check(matches(withText("Ingredients Nutella Pie")));
+
+
 
 //        onView(withRecyclerView(R.id.recyclerView).atPositionOnView(0, R.id.button_ingredient)).perform(click());
 //        onView(withId(R.id.button_ingredient)).check(matches(withText("Ingredients Nutella Pie")));
