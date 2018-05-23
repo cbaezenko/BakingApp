@@ -135,13 +135,18 @@ public class SelectIngredientStepFragment extends Fragment implements Ingredient
             mFavoriteRecipe.saveRecipeNameToPref(defaultRecipe);
             mFavoriteRecipe.saveRecipeIdToPref(defaultId);
 
-            mOnFavoriteSignal.showSignal("Widget to default value " + getContext()
-                    .getResources()
-                    .getString(R.string.default_recipe));
+            String signalDefault = String.format("%s%s", getResources().getString(R.string.widget_to_default),
+                    defaultRecipe);
+
+            mOnFavoriteSignal.showSignal(signalDefault);
         } else {
             mFavoriteRecipe.saveRecipeNameToPref(mRecipe.getName());
             mFavoriteRecipe.saveRecipeIdToPref(mRecipe.getId());
-            mOnFavoriteSignal.showSignal("save " + mRecipe.getName() + " to Widget");
+            String signalSaved = String.format("%s%s%s%s", getResources().getString(R.string.save),
+                    mRecipe.getName(),
+                    " ",
+                    getResources().getString(R.string.to_widget));
+            mOnFavoriteSignal.showSignal(signalSaved);
         }
         initSwitch();
     }

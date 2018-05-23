@@ -13,6 +13,12 @@
     <string name="default_recipe">Brownies</string>
     <string name="default_id">2</string>
 
+    <string name="widget_to_default">Widget to default value </string>
+    <string name="save">Save</string>
+    <string name="to_widget">to Widget</string>
+
+    <string name="favorite">Favorite</string>
+
     <string name="no_item_selected">No item selected</string>
 
     <string name="no_video">No video Available</string>

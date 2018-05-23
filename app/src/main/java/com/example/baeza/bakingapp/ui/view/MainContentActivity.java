@@ -44,8 +44,10 @@ public class MainContentActivity extends AppCompatActivity
     private boolean mediaCurrentState;
 
     private static final String IS_INGREDIENT_SHOWN = "is_ingredient_shown";
+    private static final String IS_STEP_SHOWN = "is_step_shown";
 
     private boolean isIngredientShown;
+    private boolean isStepSelected;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +66,12 @@ public class MainContentActivity extends AppCompatActivity
                     bundle.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
                     replaceFragment(new IngredientFragment(), R.id.detail_container, bundle);
 
-                }else{
-                setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
-                createBundleAndReplaceFragmentNoClick(recipePosition);}
+                }else {
+                    setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
+                    if (isStepSelected) {
+                        createBundleAndReplaceFragmentNoClick(recipePosition);
+                    }
+                }
             } else {
                 retrieveInfoBundle();
                 setFragment(new SelectIngredientStepFragment(), R.id.menu_fragment, createBundleToFragment());
@@ -111,7 +116,8 @@ public class MainContentActivity extends AppCompatActivity
     }
 
     public void retrieveInfoFromSavedInstanceState(Bundle savedInstanceState) {
-        isIngredientShown =savedInstanceState.getBoolean(IS_INGREDIENT_SHOWN);
+        isIngredientShown = savedInstanceState.getBoolean(IS_INGREDIENT_SHOWN);
+        isStepSelected = savedInstanceState.getBoolean(IS_STEP_SHOWN);
         mediaCurrentPosition = savedInstanceState.getLong(MEDIA_CURRENT_POSITION);
         mediaCurrentState = savedInstanceState.getBoolean(MEDIA_CURRENT_STATE);
         recipe = savedInstanceState.getParcelable(Constants.RECIPE_KEY);
@@ -131,6 +137,7 @@ public class MainContentActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean(IS_INGREDIENT_SHOWN, isIngredientShown);
+        savedInstanceState.putBoolean(IS_STEP_SHOWN, isStepSelected);
         savedInstanceState.putParcelableArrayList(Constants.INGREDIENT_LIST_KEY, (ArrayList<? extends Parcelable>) mIngredientList);
         savedInstanceState.putParcelable(Constants.RECIPE_KEY, recipe);
         savedInstanceState.putParcelableArrayList(Constants.STEP_LIST_KEY, (ArrayList<? extends Parcelable>) stepList);
@@ -143,6 +150,7 @@ public class MainContentActivity extends AppCompatActivity
     @Override
     public void onRecipeClicked(int recipePosition) {
         isIngredientShown = false;
+        isStepSelected = true;
         this.recipePosition = recipePosition;
         createBundleAndReplaceFragment(recipePosition);
     }
@@ -172,6 +180,7 @@ public class MainContentActivity extends AppCompatActivity
     @Override
     public void onIngredientClicked(Bundle bundle) {
         isIngredientShown = true;
+        isStepSelected = false;
         replaceFragment(new IngredientFragment(), R.id.detail_container, bundle);
     }
 

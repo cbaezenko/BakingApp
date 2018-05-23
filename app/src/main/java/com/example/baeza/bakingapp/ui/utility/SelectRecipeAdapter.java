@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,15 +28,10 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
     private List<Recipe> recipeList;
     private Context context;
     private ArrayList<String> imageArrays = new ArrayList<>();
-//    private FavoriteRecipe mFavoriteRecipe;
-    private CoordinatorLayout mCoordinatorLayout;
 
     public SelectRecipeAdapter(Context context, List<Recipe> recipeList, CoordinatorLayout coordinatorLayout) {
         this.recipeList = recipeList;
         this.context = context;
-        this.mCoordinatorLayout = coordinatorLayout;
-
-//        mFavoriteRecipe = new FavoriteRecipe(context);
 
         //images url for the recipes, Nutella Pie, Brownies, Yellow Cake, Cheesecake.
         imageArrays.add("https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
@@ -64,12 +57,6 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         holder.cardImage.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
         holder.tvPortion.setText(String.format("%d", recipeList.get(position).getServings()));
 
-//        if ((mFavoriteRecipe.getRecipeIdFromPref()+1) == recipeList.get(position).getId()) {
-//            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_yellow_24dp));
-//        } else if ((mFavoriteRecipe.getRecipeIdFromPref() +1) != recipeList.get(position).getId()) {
-//            holder.imageButton_favorite.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_star_border_yellow_24dp));
-//        }
-
         Picasso.with(context)
                 .load(imageArrays.get(position))
                 .placeholder(R.drawable.rectangle)
@@ -88,7 +75,6 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
         ImageView cardImage;
         TextView cardTitle, tvPortion;
         Button buttonShow;
-        ImageButton imageButton_favorite;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -98,21 +84,10 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
             buttonShow = itemView.findViewById(R.id.button_ingredient);
             tvPortion = itemView.findViewById(R.id.tv_portion);
             itemView.setOnClickListener(this);
-//            imageButton_favorite = itemView.findViewById(R.id.imageButton_favorite);
-//
-//            imageButton_favorite.setOnClickListener(this);
-//            buttonShow.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-
-//            if (view.getId() == R.id.imageButton_favorite) {
-//                mFavoriteRecipe.saveRecipeIdToPref(getAdapterPosition());
-//                mFavoriteRecipe.saveRecipeNameToPref(recipeList.get(getAdapterPosition()).getName());
-//                showSnack();
-//                notifyDataSetChanged();
-//            } else {
 
                 int clickedPosition = getAdapterPosition();
 
@@ -124,13 +99,6 @@ public class SelectRecipeAdapter extends RecyclerView.Adapter<SelectRecipeAdapte
                 Intent intent = new Intent(context, MainContentActivity.class);
                 intent.putExtra(Constants.RECIPE_KEY, bundle);
                 context.startActivity(intent);
-//            }
         }
     }
-
-//    private void showSnack(){
-//        Snackbar snackbar = Snackbar
-//                .make(mCoordinatorLayout, context.getString(R.string.saved_to_widget), Snackbar.LENGTH_LONG);
-//        snackbar.show();
-//    }
 }
