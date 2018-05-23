@@ -38,7 +38,7 @@ public class GetRecipeListTest {
     @Test
     public void checkRecipeObject(){
         //if the data request works as expected then progressBar is not VISIBLE.
-        onView(withId(R.id.progressBar)).check(matches(isDisplayed()));
+        onView(withId(R.id.progressBar)).check(matches(withEffectiveVisibility(GONE)));
     }
 
     @After

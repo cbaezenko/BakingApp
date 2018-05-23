@@ -56,8 +56,8 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
     @VisibleForTesting
     @NonNull
-    public IdlingResource getIdlingResource(){
-        if(mIdlingResource == null){
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
             mIdlingResource = new SimpleIdlingResource();
         }
         return mIdlingResource;
@@ -101,6 +101,10 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 
         if (hasInternetConnection) {
             mPresenter.getRecipesInteractor();
+            //for testing purposes
+            if (mIdlingResource != null) {
+                mIdlingResource.setIdleState(false);
+            }
             mFrameLayoutProgressBar.setVisibility(View.VISIBLE);
         } else {
             mFrameLayoutNoInternetConnection.setVisibility(View.VISIBLE);
@@ -113,8 +117,9 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
             mFrameLayoutProgressBar.setVisibility(View.GONE);
 
             //for testing purposes
-            if(mIdlingResource!=null){
-            mIdlingResource.setIdleState(true);}
+            if (mIdlingResource != null) {
+                mIdlingResource.setIdleState(true);
+            }
 
             mRecipeList = recipeList;
             populateRecyclerView(mRecipeList);
