@@ -1,5 +1,6 @@
 package com.example.baeza.bakingapp.ui.view;
 
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +16,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import android.support.test.espresso.IdlingResource;
+import android.widget.Toast;
 
-import com.example.baeza.bakingapp.IdlingResource.SimpleIdlingResource;
+import com.example.baeza.bakingapp.IdlingResource.EspressoIdlingResource;
+//import com.example.baeza.bakingapp.IdlingResource.SimpleIdlingResource;
 import com.example.baeza.bakingapp.R;
 import com.example.baeza.bakingapp.ui.data.Recipe;
 import com.example.baeza.bakingapp.ui.manager.SelectRecipeManager;
@@ -51,17 +54,29 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     private boolean hasInternetConnection;
     private static final String INFO_TO_KEEP = "INFO_TO_KEEP";
 
-    @Nullable
-    private SimpleIdlingResource mIdlingResource;
+//    @Nullable
+//    private SimpleIdlingResource mIdlingResource;
+//
+//    @VisibleForTesting
+//    @NonNull
+//    public IdlingResource getIdlingResource() {
+//        if (mIdlingResource == null) {
+//            mIdlingResource = new SimpleIdlingResource();
+//        }
+//        return mIdlingResource;
+//    }
 
-    @VisibleForTesting
-    @NonNull
-    public IdlingResource getIdlingResource() {
-        if (mIdlingResource == null) {
-            mIdlingResource = new SimpleIdlingResource();
-        }
-        return mIdlingResource;
-    }
+//    @VisibleForTesting
+//    @NonNull
+//    private void delayForRecyclerViewFullfill(){
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mIdlingResource.setIdleState(true);
+//            }
+//        },3000);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +118,8 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
 //            if (mIdlingResource != null) {
 //                mIdlingResource.setIdleState(false);
 //            }
+            EspressoIdlingResource.increment();
+
             mPresenter.getRecipesInteractor();
             mFrameLayoutProgressBar.setVisibility(View.VISIBLE);
         } else {
@@ -118,10 +135,14 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
             mRecipeList = recipeList;
             populateRecyclerView(mRecipeList);
 
+            Timber.d("data request successfully");
+            Toast.makeText(getApplicationContext(), "data request successfully", Toast.LENGTH_SHORT).show();
             //for testing purposes
-            if (mIdlingResource != null) {
-                mIdlingResource.setIdleState(true);
-            }
+//            if (mIdlingResource != null) {
+//                mIdlingResource.setIdleState(true);
+////                delayForRecyclerViewFullfill();
+//            }
+            EspressoIdlingResource.decrement();
 
         } else {
             mFrameLayoutNoInternetConnection.setVisibility(View.VISIBLE);
@@ -132,12 +153,6 @@ public class SelectRecipeActivity extends AppCompatActivity implements SelectRec
     @Override
     public void hasInternetConnectionView(boolean hasInternetConnection) {
         this.hasInternetConnection = hasInternetConnection;
-
-        if(hasInternetConnection){
-            if (mIdlingResource != null) {
-                mIdlingResource.setIdleState(false);
-            }
-        }
     }
 
     private void populateRecyclerView(List<Recipe> recipeList) {

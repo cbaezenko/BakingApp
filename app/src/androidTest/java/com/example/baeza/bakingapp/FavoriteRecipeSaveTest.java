@@ -1,14 +1,14 @@
 package com.example.baeza.bakingapp;
 
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.IdlingResource;
+import android.content.Context;
+import android.support.test.espresso.IdlingRegistry;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.baeza.bakingapp.IdlingResource.EspressoIdlingResource;
 import com.example.baeza.bakingapp.ui.utility.FavoriteRecipe;
 import com.example.baeza.bakingapp.ui.view.SelectRecipeActivity;
-
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,17 +16,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import timber.log.Timber;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public class FavoriteRecipeSaveTest {
 
-
-    private IdlingResource mIdlingResource;
+    private static final String SELECTED_RECIPE = "Nutella Pie";
 
     @Rule
     public ActivityTestRule<SelectRecipeActivity> mActivityTestRule =
@@ -34,34 +33,33 @@ public class FavoriteRecipeSaveTest {
 
     @Before
     public void registerIdlingResource() {
-        mIdlingResource = mActivityTestRule.getActivity().getIdlingResource();
-        Espresso.registerIdlingResources(mIdlingResource);
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     @After
     public void unregisterIdlingResource() {
-        if (mIdlingResource != null) {
-            Espresso.unregisterIdlingResources(mIdlingResource);
-        }
+            IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 
     @Test
-    public void clickFavoriteButtonInItem_saveTheRightItemInFavorites() {
+    public void clickOnRecipe_goToDetails_checkAsFavoriteAndCheck() {
+        onView(withId(R.id.recyclerView))
+                        .perform(RecyclerViewActions
+                        .actionOnItemAtPosition(0, click()));
 
-//        onView(withRecyclerView(R.id.recyclerView).atPositionOnView(1, R.id.imageButton_favorite)).perform(click());
+        Context context = mActivityTestRule.getActivity().getApplicationContext();
+        FavoriteRecipe favoriteRecipe = new FavoriteRecipe(context);
+        String savedRecipeName = favoriteRecipe.getRecipeNameFromPref();
 
-        FavoriteRecipe favoriteRecipe = new FavoriteRecipe(mActivityTestRule.getActivity().getApplicationContext());
-        final String favoriteRecipeString = favoriteRecipe.getRecipeNameFromPref();
+        if(savedRecipeName.equals(SELECTED_RECIPE)){
+            //if is already as Favorite, test is positive
+            onView(withText(savedRecipeName)).check(matches(withText(SELECTED_RECIPE)));
 
-        //Check in console if the recipe was actually save.
-        Timber.d("saved recipe" + favoriteRecipeString);
-
-        onView(withRecyclerView(R.id.recyclerView)
-                .atPositionOnView(1, R.id.card_title))
-                .check(matches(withText(favoriteRecipeString.trim())));
-    }
-
-    public static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
-        return new RecyclerViewMatcher(recyclerViewId);
+        }else{
+            //if Nutella Pie was not in favoites, we add it.
+            onView(withId(R.id.switch_favorite)).perform(click());
+            savedRecipeName = favoriteRecipe.getRecipeNameFromPref();
+            onView(withText(savedRecipeName)).check(matches(withText(SELECTED_RECIPE)));
+        }
     }
 }

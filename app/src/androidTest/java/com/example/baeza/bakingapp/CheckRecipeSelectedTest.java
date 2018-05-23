@@ -1,14 +1,13 @@
 package com.example.baeza.bakingapp;
 
-import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingRegistry;
-import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.baeza.bakingapp.IdlingResource.EspressoIdlingResource;
 import com.example.baeza.bakingapp.ui.view.SelectRecipeActivity;
 
 import org.junit.After;
@@ -20,7 +19,6 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -28,16 +26,13 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class CheckRecipeSelectedTest {
 
-    private IdlingResource mIdlingResource;
-
     @Rule
     public ActivityTestRule<SelectRecipeActivity> mActivityTestRule =
             new ActivityTestRule<>(SelectRecipeActivity.class);
 
     @Before
     public void registerIdlingResource() {
-        mIdlingResource = mActivityTestRule.getActivity().getIdlingResource();
-        IdlingRegistry.getInstance().register(mIdlingResource);
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource());
     }
 
     /*
@@ -46,25 +41,13 @@ public class CheckRecipeSelectedTest {
     * */
 
     @Test
-    public void checkRecyclerViewIsDisplayed(){
-        onView(withId(R.id.recyclerView)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void clickOnRecipe_checkCorrectRecipeIsShown() {
         onView(ViewMatchers.withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.button_ingredient)).check(matches(withText("Ingredients Nutella Pie")));
-
-    }
-
-    public static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
-        return new RecyclerViewMatcher(recyclerViewId);
     }
 
     @After
     public void unregisterIdlingResource() {
-        if (mIdlingResource != null) {
-            IdlingRegistry.getInstance().unregister(mIdlingResource);
-        }
+            IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource());
     }
 }
