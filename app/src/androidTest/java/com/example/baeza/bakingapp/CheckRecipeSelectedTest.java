@@ -7,9 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
 
-import com.example.baeza.bakingapp.ui.utility.FavoriteRecipe;
 import com.example.baeza.bakingapp.ui.view.SelectRecipeActivity;
 
 import org.junit.After;
@@ -22,7 +20,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
@@ -54,20 +51,9 @@ public class CheckRecipeSelectedTest {
 
     @Test
     public void clickOnRecipe_checkCorrectRecipeIsShown() {
-//        FavoriteRecipe favoriteRecipe = new FavoriteRecipe(mActivityTestRule.getActivity().getApplicationContext());
-//        int favoritePosition = favoriteRecipe.getRecipeIdFromPref();
-//        if(favoritePosition > 3){
-//            favoritePosition = 0;
-//        }
-
-        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-//        onView(withId(R.id.switch_favorite)).perform(click());
+        onView(ViewMatchers.withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.button_ingredient)).check(matches(withText("Ingredients Nutella Pie")));
 
-
-
-//        onView(withRecyclerView(R.id.recyclerView).atPositionOnView(0, R.id.button_ingredient)).perform(click());
-//        onView(withId(R.id.button_ingredient)).check(matches(withText("Ingredients Nutella Pie")));
     }
 
     public static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
