@@ -42,6 +42,7 @@ Application result images:
 ![BakkingApp3](bakingapp_phone3.png)
 ![BakkingApp4](bakingapp_phone4.png)
 
+
 ## Tablet view:
 
 ![BakkingApp5](bakkingapp_tablet1.jpg)
