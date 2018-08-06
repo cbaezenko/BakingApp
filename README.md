@@ -35,13 +35,15 @@ One of the skills you will demonstrate in this project is how to handle unexpect
 
 Application result images:
 
-Phone view:![BakkingApp1](bakingapp_phone1.png)
+## Phone view:
+
+![BakkingApp1](bakingapp_phone1.png)
 ![BakkingApp2](bakingapp_phone2.png)
 ![BakkingApp3](bakingapp_phone3.png)
 ![BakkingApp4](bakingapp_phone4.png)
 
-Tablet view:
+## Tablet view:
 
-![BakkingApp5](bakingapp_phone1.jpg)
-![BakkingApp6](bakingapp_phone1.jpg)
-![BakkingApp7](bakingapp_phone1.jpg)
+![BakkingApp5](bakingapp_tablet1.jpg)
+![BakkingApp6](bakingapp_tablet2.jpg)
+![BakkingApp7](bakingapp_tablet3.jpg)
