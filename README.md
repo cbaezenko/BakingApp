@@ -5,10 +5,13 @@ Application meet the requeriments of this [rubric](https://review.udacity.com/#!
 
 This project uses the following libraries:
 
-ButterKnife :http://jakewharton.github.io/butterknife/
-Timber : https://github.com/JakeWharton/timber
-ExoPlayer
-Espresso
+* ButterKnife :http://jakewharton.github.io/butterknife/
+* Timber : https://github.com/JakeWharton/timber
+* ExoPlayer
+
+UI Test Framework:
+
+* Espresso
 
 
 The application uses differents layouts depending on the device.
